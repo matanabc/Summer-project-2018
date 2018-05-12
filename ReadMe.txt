@@ -19,5 +19,4 @@ Pi:
 -to run the cod go to the "java" directory and run the code buy typing "./grblew run --offline"
 
 
-good luck, and i hope help.
-Matan
+good luck, and i hope i help.

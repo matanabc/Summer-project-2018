@@ -1,19 +1,8 @@
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.BlockingQueue;
 
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.VideoMode;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class EmptyConsumer implements Runnable{
 
@@ -21,7 +10,6 @@ public class EmptyConsumer implements Runnable{
 	
 	public EmptyConsumer(BlockingQueue<MatTime> queue) {
 		//creating camera object 
-		
 		this.queue = queue;
 	}
 
