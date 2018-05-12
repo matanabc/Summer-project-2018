@@ -102,7 +102,7 @@ public class FrameConsumer implements Runnable{
 				for (MatOfPoint rect : contours) {//print the area of the contours that he fond
 					Rect r = Imgproc.boundingRect(rect);
 					bound.add(r);
-					Imgproc.rectangle(inputImage, r.tl(), r.br(), scalarGreen, 3);//printing
+					Imgproc.rectangle(inputImage.getMat(), r.tl(), r.br(), scalarGreen, 3);//printing
 				};
 
 				if(bound.size() == 2){//if he find 2 contours
@@ -117,8 +117,8 @@ public class FrameConsumer implements Runnable{
 					center_x = (x1 + x2)/2;
 					center_y = (y1 + y2)/2;
 
-					Imgproc.rectangle(inputImage, new Point(x1, y1), new Point(x2, y2),scalarBlue, 3);//print the area from left point and the right point of the contor that he fond
-					Imgproc.rectangle(inputImage, new Point(center_x, center_y), new Point(center_x, center_y), scalarRed, 3);//print the center
+					Imgproc.rectangle(inputImage.getMat(), new Point(x1, y1), new Point(x2, y2),scalarBlue, 3);//print the area from left point and the right point of the contor that he fond
+					Imgproc.rectangle(inputImage.getMat(), new Point(center_x, center_y), new Point(center_x, center_y), scalarRed, 3);//print the center
 
 					//VisionTable.putNumber("center x",center_x);//send center_x to the robot
 					//VisionTable.putNumber("center y",center_y);//send center_y to the robot
@@ -128,7 +128,7 @@ public class FrameConsumer implements Runnable{
 					//VisionTable.putBoolean("fint 2 contors", true);
 
 				}else{//if he find more then 2 contours or lest then 2 contours, print red on the sides of the frame
-					Imgproc.rectangle(inputImage, p0, p1, scalarRed, 10);//printing red on the sides of the frame 
+					Imgproc.rectangle(inputImage.getMat(), p0, p1, scalarRed, 10);//printing red on the sides of the frame 
 					//VisionTable.putBoolean("fint 2 contors", false);
 					
 					VisionTable.putString("TargetInfo", "0|");
@@ -143,7 +143,7 @@ public class FrameConsumer implements Runnable{
 					c++;
 				}
 
-				this.imageSource.putFrame(inputImage);//Presents the frame and what what he detect in port 1185
+				this.imageSource.putFrame(inputImage.getMat());//Presents the frame and what what he detect in port 1185
 				
 			}catch (Exception e) {
 				e.printStackTrace();

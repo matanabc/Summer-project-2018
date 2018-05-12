@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class EmptyConsumer implements Runnable{
 
-	protected BlockingQueue<Mat> queue = null;
+	protected BlockingQueue<MatTime> queue = null;
 	
-	public EmptyConsumer(BlockingQueue<Mat> queue) {
+	public EmptyConsumer(BlockingQueue<MatTime> queue) {
 		//creating camera object 
 		
 		this.queue = queue;
@@ -35,7 +35,7 @@ public class EmptyConsumer implements Runnable{
 		
 			while(true){
 			try {
-				Mat inputImage = this.queue.take();
+				Mat inputImage = this.queue.take().getMat();
 
 				//print fps
 				if (Calendar.getInstance().getTimeInMillis() - time > 1000) {

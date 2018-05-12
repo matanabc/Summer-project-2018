@@ -54,7 +54,7 @@ public class FrameProducer implements Runnable{
 			
 			long frameTime = imageSink.grabFrame(inputImage);
 			
-			MatTime matTimeToQueue = new (inputImage, Calendar.getInstance().getTimeInMillis());
+			MatTime matTimeToQueue = new MatTime(inputImage, Calendar.getInstance().getTimeInMillis());
 			
 			if (frameTime == 0) continue;
 			try {
