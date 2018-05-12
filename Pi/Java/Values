@@ -1,0 +1,39 @@
+#Camera sittings:
+camera_Id=0
+camera_FPS=30
+camera_Width=320
+camera_Height=240
+camera_Brightness=50
+camera_Exposure=0
+
+#robot:
+roboRioIP=roborio-3211-FRC.local
+table=SmartDashboard
+
+#Stream ports:
+HSV_Port=1186
+frame_Port=1185
+
+#HSV Values:
+sMax=160
+hMax=255
+vMax=255
+sMin=0.0
+hMin=0.0
+vMin=0.0
+
+#Grip Values:
+findContoursExternalOnly=false
+filterContoursMinArea=50
+filterContoursMinPerimeter=0
+filterContoursMinWidth=0
+filterContoursMaxWidth=1000
+filterContoursMinHeight=0
+filterContoursMaxHeight=1000
+filterContoursSolidityMin=0
+filterContoursSolidityMax=100
+filterContoursMaxVertices=1000000
+filterContoursMinVertices=0
+filterContoursMinRatio=0
+filterContoursMaxRatio=15
+			
