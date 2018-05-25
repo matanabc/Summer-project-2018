@@ -29,27 +29,15 @@ public class ShooterSystem extends Subsystem {
 	private WPI_TalonSRX masterShootMotor_ = new WPI_TalonSRX(RobotMap.MASTER_SHOOTER_MOTOR_CAN);
 	private WPI_TalonSRX slaveShootMotor_= new WPI_TalonSRX(RobotMap.SLAVE_SHOOTER_MOTOR_CAN);
 
-	private VictorSP sideMotor_ = new VictorSP(RobotMap.SIDE_MOTOR_CAN);
+	//private VictorSP sideMotor_ = new VictorSP(RobotMap.SIDE_MOTOR_CAN);
 	private WPI_TalonSRX sideEncoder_ = new WPI_TalonSRX(RobotMap.SIDE_MOTOR_CAN);
-	
-	private PIDController sidePID;
 
 	//Tree of history position from encoder
 	private TreeMap<Long,Double> encoderHistory = new TreeMap<Long,Double>();
 
 
 	public ShooterSystem(){
-		masterShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-		masterShootMotor_.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); 
-		slaveShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-
-		sideEncoder_.set(com.ctre.phoenix.motorcontrol.ControlMode.Position,0);
-		sideEncoder_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-		sideEncoder_.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); 
-		sideEncoder_.config_kP(0, 0.26, 0);
-		
-		//this.sidePID = new PIDController(0, 0, 0, null, this.sideMotor_);
-		
+		resetTalon();
 	}
 
 	public void initDefaultCommand() {
@@ -57,11 +45,35 @@ public class ShooterSystem extends Subsystem {
 		setDefaultCommand(new AddEncoderPositionToHestoryCommand());
 	}
 
+	public void resetTalon(){
+		masterShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+		masterShootMotor_.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); 
+		slaveShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+
+		sideEncoder_.set(com.ctre.phoenix.motorcontrol.ControlMode.Position,0);
+		sideEncoder_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		sideEncoder_.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); 
+		
+    	sideEncoder_.config_kF(0, 0, 0);
+    	sideEncoder_.config_kP(0, 0, 0);
+    	sideEncoder_.config_kI(0, 0, 0);
+    	sideEncoder_.config_kD(0, 0, 0);
+    	
+    	sideEncoder_.config_kP(0, 2, 0);
+    	sideEncoder_.config_kD(0, 60, 0);
+    	sideEncoder_.config_IntegralZone(0, (int) (1023/2), 0);
+
+	}
+	
+	public void setSideToStay(){
+		sideEncoder_.set(ControlMode.Position, (getSideEncoderPosition()/0.03773584905660377358490566037736));
+	}
+	
 	public double getShooterVelocity(){
-		return masterShootMotor_.getSelectedSensorVelocity(0) * 60 / RobotMap.PULLS_PER_TIC;
+		return masterShootMotor_.getSelectedSensorVelocity(0);// * 60 / RobotMap.PULLS_PER_TIC;
 	}
 
-	public void resetTalon(){
+	public void resetTalonsEncoders(){
 
 		masterShootMotor_.setSelectedSensorPosition(0, 0, 0);
 		sideEncoder_.setSelectedSensorPosition(0, 0, 0);
@@ -70,10 +82,10 @@ public class ShooterSystem extends Subsystem {
     	masterShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
     	masterShootMotor_.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 
-    	masterShootMotor_.config_kF(0, 0.08, 10);
-    	masterShootMotor_.config_kP(0, 0.15, 10);
-    	masterShootMotor_.config_kI(0, 0, 10);
-    	masterShootMotor_.config_kD(0, 0, 10);
+    	masterShootMotor_.config_kF(0, 0, 0);
+    	masterShootMotor_.config_kP(0, 0, 0);
+    	masterShootMotor_.config_kI(0, 0, 0);
+    	masterShootMotor_.config_kD(0, 0, 0);
 
     	slaveShootMotor_.follow(masterShootMotor_);
 
@@ -88,10 +100,10 @@ public class ShooterSystem extends Subsystem {
 		slaveShootMotor_.set(-rpm);
 	}
 
-	public void setSideMotorSpeed(double speed){
+	public void setSideMotorSetPoint(double position){
 		//sideMotor_.set(speed);
 		//sideEncoder_.set(0.2);
-		sideEncoder_.set(ControlMode.Position, (100/0.03773584905660377358490566037736));
+		sideEncoder_.set(ControlMode.Position, (position/0.03773584905660377358490566037736));
 	}
 
 	public double getSideEncoderPosition(){

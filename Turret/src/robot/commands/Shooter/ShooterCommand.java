@@ -28,6 +28,9 @@ public class ShooterCommand extends Command {
 		shooterSpeed = 0;
 		lastTime = 0.0;
 		errorAngle = 0;
+
+		Robot.shooterSystem.setSideToStay();
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -38,12 +41,12 @@ public class ShooterCommand extends Command {
 		//if(Double.parseDouble(TargetInfo[3]) > lastTime){
 		//lastTime = Double.parseDouble(TargetInfo[3]);
 		int i;
-       	for(i = 0; i < TargetInfo.length; i++){
-       		String num = String.valueOf(i);
-       		SmartDashboard.putString(num , TargetInfo[i]);
-       	}
-       	SmartDashboard.putNumber("length", TargetInfo.length);
-       	/*
+		for(i = 0; i < TargetInfo.length; i++){
+			String num = String.valueOf(i);
+			SmartDashboard.putString(num , TargetInfo[i]);
+		}
+		SmartDashboard.putNumber("length", TargetInfo.length);
+		/*
        	if(i ==4){
        		errorAngle = Robot.shooterSystem.getSideEncoderPosition() - ((Double.parseDouble(TargetInfo[1]) - 160) * 0.375) ;//+  Robot.shooterSystem.getSideEncoderPosition();//
        	}
@@ -57,17 +60,17 @@ public class ShooterCommand extends Command {
 		Robot.shooterSystem.addEncoderPoditionToHistory();
 
 		if(TargetInfo.length == 3){
-			if(Double.parseDouble(TargetInfo[2]) > lastTime){
+			if(Long.parseLong(TargetInfo[2]) > lastTime){
 				lastTime = Double.parseDouble(TargetInfo[2]);
 				errorAngle = /*Robot.shooterSystem.getEncoderPositionFromTime((long) lastTime)*/Robot.shooterSystem.getSideEncoderPosition() - ((Double.parseDouble(TargetInfo[0]) - 160) * 0.375);
 			}
 		}
-		
-		sideSpeed = -(errorAngle - Robot.shooterSystem.getSideEncoderPosition()) * RobotMap.KP_SIDE;
-		
+
+		//sideSpeed = -(errorAngle - Robot.shooterSystem.getSideEncoderPosition()) * RobotMap.KP_SIDE;
+
 		Robot.shooterSystem.setShootRPM(-Robot.oi.AdelStick.getRawAxis(5));
-		Robot.shooterSystem.setSideMotorSpeed(sideSpeed);
-		
+		Robot.shooterSystem.setSideMotorSetPoint(errorAngle);
+
 		/*if (Calendar.getInstance().getTimeInMillis() - time > 1000) {
 			time = Calendar.getInstance().getTimeInMillis();
 			System.out.println("loop times: " + count);
@@ -75,7 +78,7 @@ public class ShooterCommand extends Command {
 		}else {
 			count++;
 		}*/
-		
+
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -86,7 +89,7 @@ public class ShooterCommand extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.shooterSystem.setShootRPM(0);
-		Robot.shooterSystem.setSideMotorSpeed(0);
+		Robot.shooterSystem.setSideToStay();
 	}
 
 	// Called when another command which requires one or more of the same

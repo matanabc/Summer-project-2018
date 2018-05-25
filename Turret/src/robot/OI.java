@@ -10,6 +10,7 @@ package robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import robot.commands.Shooter.ResetTalonsEncodersCommand;
 import robot.commands.Shooter.ShooterCommand;
 import robot.commands.drive.DriveSpeed;
 
@@ -35,7 +36,7 @@ public class OI {
 		//AdelBtns[4].whileHeld(new DriveSpeed(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
 		
 		AdelBtns[0].whileHeld(new ShooterCommand(0));
-		//AdelBtns[1].whileHeld(new ShooterCommand(0));
+		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 		//AdelBtns[2].whileHeld(new ShooterCommand(0.25));//Right
 	}
 }

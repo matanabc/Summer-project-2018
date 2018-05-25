@@ -20,6 +20,7 @@ public class AddEncoderPositionToHestoryCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.shooterSystem.addEncoderPoditionToHistory();
+		//Robot.shooterSystem.resetTalonsEncoders();
 		//Robot.shooterSystem.setSideMotorSpeed(Robot.oi.AdelStick.getRawAxis(4));
 	}
 
