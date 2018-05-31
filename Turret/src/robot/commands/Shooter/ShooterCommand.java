@@ -3,7 +3,6 @@ package robot.commands.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
-import robot.RobotMap;
 
 public class ShooterCommand extends Command {
 

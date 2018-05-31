@@ -31,9 +31,13 @@ public class RobotMap {
 	public static final double DRIVE_SLOW = 0.5;
 	
 	//Shooter
-	public static final double KP_SIDE = 0.015;
+	public static final double KP_SIDE = 2;
 	public static final double KI_SIDE = 0;
+	public static final double KD_SIDE = 60;
+	public static final int KINTEGRAL_I_ZONE_SIDE = (int) (1023/KP_SIDE);
+	
 	public static final double KP_SPEEN_SPEED = 0.2;
 	public static final double PULLS_PER_TIC = 4125;
+	public static final double ENCODER_POSITION_ANGLE = 0.03773584905660377358490566037736;
 	public static final double MAX_DECODER_HOSTORY_SIZE = 1000;
 }

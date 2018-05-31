@@ -5,18 +5,9 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.RobotMap;
 import robot.commands.Shooter.AddEncoderPositionToHestoryCommand;
@@ -59,14 +50,14 @@ public class ShooterSystem extends Subsystem {
     	sideEncoder_.config_kI(0, 0, 0);
     	sideEncoder_.config_kD(0, 0, 0);
     	
-    	sideEncoder_.config_kP(0, 2, 0);
-    	sideEncoder_.config_kD(0, 60, 0);
-    	sideEncoder_.config_IntegralZone(0, (int) (1023/2), 0);
+    	sideEncoder_.config_kP(0, RobotMap.KP_SIDE, 0);
+    	sideEncoder_.config_kD(0, RobotMap.KD_SIDE, 0);
+    	sideEncoder_.config_IntegralZone(0, RobotMap.KINTEGRAL_I_ZONE_SIDE, 0);
 
 	}
 	
 	public void setSideToStay(){
-		sideEncoder_.set(ControlMode.Position, (getSideEncoderPosition()/0.03773584905660377358490566037736));
+		sideEncoder_.set(ControlMode.Position, (getSideEncoderPosition()/RobotMap.ENCODER_POSITION_ANGLE));
 	}
 	
 	public double getShooterVelocity(){
@@ -103,11 +94,11 @@ public class ShooterSystem extends Subsystem {
 	public void setSideMotorSetPoint(double position){
 		//sideMotor_.set(speed);
 		//sideEncoder_.set(0.2);
-		sideEncoder_.set(ControlMode.Position, (position/0.03773584905660377358490566037736));
+		sideEncoder_.set(ControlMode.Position, (position/RobotMap.ENCODER_POSITION_ANGLE));
 	}
 
 	public double getSideEncoderPosition(){
-		return sideEncoder_.getSelectedSensorPosition(0) * 0.03773584905660377358490566037736;
+		return sideEncoder_.getSelectedSensorPosition(0) * RobotMap.ENCODER_POSITION_ANGLE;
 	}
 
 	public void addEncoderPoditionToHistory() {
