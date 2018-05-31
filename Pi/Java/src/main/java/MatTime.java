@@ -1,12 +1,10 @@
-
-
 import org.opencv.core.Mat;
 
 public final class MatTime {
 	private Mat mat;
-	private double time;
+	private long time;
 	
-	public MatTime(Mat mat, double time) {
+	public MatTime(Mat mat, Long time) {
 		super();
 		this.mat = mat;
 		this.time = time;
@@ -18,7 +16,7 @@ public final class MatTime {
 	public Mat getMat() {
 		return mat;
 	}
-	public double getTime() {
+	public long getTime() {
 		return time;
 	}	
 }

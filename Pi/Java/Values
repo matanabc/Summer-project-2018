@@ -1,39 +1,31 @@
-#Camera sittings:
-camera_Id=0
-camera_FPS=30
-camera_Width=320
-camera_Height=240
-camera_Brightness=50
-camera_Exposure=0
-
-#robot:
-roboRioIP=roborio-3211-FRC.local
-table=SmartDashboard
-
-#Stream ports:
-HSV_Port=1186
-frame_Port=1185
-
 #HSV Values:
-sMax=160
-hMax=255
-vMax=255
-sMin=0.0
-hMin=0.0
-vMin=0.0
-
-#Grip Values:
-findContoursExternalOnly=false
-filterContoursMinArea=50
-filterContoursMinPerimeter=0
-filterContoursMinWidth=0
-filterContoursMaxWidth=1000
-filterContoursMinHeight=0
+#Thu May 10 19:23:47 UTC 2018
 filterContoursMaxHeight=1000
+filterContoursMinArea=50
+filterContoursMaxWidth=1000
+frame_Port=1185
+sMin=34.0
+sMax=255.0
+camera_Height=240
+camera_FPS=30
 filterContoursSolidityMin=0
 filterContoursSolidityMax=100
+roboRioIP=roborio-3211-FRC.local
+HSV_Port=1186
+camera_Exposure=0
+camera_Id=0
+hMin=85.0
+filterContoursMinPerimeter=0
+filterContoursMinRatio=0
+hMax=100.0
+vMin=224.0
 filterContoursMaxVertices=1000000
 filterContoursMinVertices=0
-filterContoursMinRatio=0
-filterContoursMaxRatio=15
-			
+camera_Width=320
+vMax=255.0
+filterContoursMinHeight=0
+filterContoursMaxRatio=154
+camera_Brightness=50
+filterContoursMinWidth=0
+table=SmartDashboard
+findContoursExternalOnly=false

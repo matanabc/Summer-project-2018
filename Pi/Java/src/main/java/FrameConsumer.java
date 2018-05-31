@@ -54,11 +54,11 @@ public class FrameConsumer implements Runnable{
 			// This creates a CvSource to use. This will take in a Mat image that has had OpenCV operations
 			// operations 
 			this.imageSource = new CvSource("CV Image and detect Source", VideoMode.PixelFormat.kMJPEG, Width, Height, FPS);
-			this.cvStream = new MjpegServer("CV Image and detect Stream", streamPortShowCameraSeeAndDetect);
+			this.cvStream = new MjpegServer("CV Image and detect Stream", Integer.parseInt(properties.getProperty("frame_Port", "1185")));
 			this.cvStream.setSource(imageSource);
 
 			this.hsvSource= new CvSource("CV hsv Source", VideoMode.PixelFormat.kMJPEG, Width, Height, FPS);
-			this.hsvStream = new MjpegServer("CV hsv Stream", streamPortShowHsv);
+			this.hsvStream = new MjpegServer("CV hsv Stream",  Integer.parseInt(properties.getProperty("HSV_Port", "1186")));
 			this.hsvStream.setSource(hsvSource);
 
 			this.queue = queue;
@@ -138,7 +138,7 @@ public class FrameConsumer implements Runnable{
 					//VisionTable.putNumber("center x",center_x);//send center_x to the robot
 					//VisionTable.putNumber("center y",center_y);//send center_y to the robot
 
-					VisionTable.putString("TargetInfo", "1|" + center_x + "|" + center_y + "|" + inputImage.getTime());
+					//VisionTable.putString("TargetInfo", "1|" + center_x + "|" + center_y + "|" + inputImage.getTime());
 
 					//VisionTable.putBoolean("find 2 contours", true);
 
@@ -146,8 +146,10 @@ public class FrameConsumer implements Runnable{
 					Imgproc.rectangle(inputImage.getMat(), p0, p1, scalarRed, 10);//printing red on the sides of the frame 
 					//VisionTable.putBoolean("find 2 contours", false);
 
-					VisionTable.putString("TargetInfo", "0|");
+					//VisionTable.putString("TargetInfo", "0|");
 				}
+				
+				VisionTable.putString("TargetInfo", center_x + ";" + center_y + ";" + inputImage.getTime());
 
 				//print fps
 				if (Calendar.getInstance().getTimeInMillis() - time > 1000) {

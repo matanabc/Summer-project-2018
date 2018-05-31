@@ -1,7 +1,4 @@
 
-
-import java.io.FileInputStream;
-import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -9,23 +6,20 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Main {
 
-	private static final String FILE_PLACE = "/home/pi/Documents/vision/Java/Values";//fill place
-	
 	public static void main(String[] args) {
-		System.out.println("Starting! ");
-		Properties properties = new Properties();
 
 		try {
-			properties.load(new FileInputStream(FILE_PLACE));
+			
+			System.out.println("Starting! ");
 			
 			// Loads our OpenCV library. This MUST be included
 			System.loadLibrary("opencv_java310");
 
 			// Connect NetworkTables, and get access to the publishing table
 			NetworkTable.setClientMode();
-			NetworkTable.setIPAddress(properties.getProperty("roboRioIP", "roborio-3211-FRC.local"));//ip of the robot
+			NetworkTable.setIPAddress("roborio-3211-FRC.local");//ip of the robot
 			NetworkTable.initialize();
-			NetworkTable VisionTable = NetworkTable.getTable(properties.getProperty("table", "SmartDashboard"));
+			NetworkTable VisionTable = NetworkTable.getTable("SmartDashboard");
 
 			VisionTable.putBoolean("pi connect", true);//Upload to the robot that he connect to him 
 			
@@ -40,7 +34,6 @@ public class Main {
 			
 			//making them to work in Thread
 			new Thread(producer).start();
-			
 			new Thread(consumer1).start();
 			new Thread(consumer2).start();
 			
