@@ -110,6 +110,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand.cancel();
 		}
 		shooterSystem.resetTalon();
+		shooterSystem.setSideMotorSetPoint(0);
 	}
 
 	/**
