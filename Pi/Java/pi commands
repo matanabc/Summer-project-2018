@@ -10,3 +10,7 @@ pi commands:
 
 5.ifconfig - show the ip of the raspberry.
 
+6.vcgencmd get_camera - show if raspberry camera is detected.
+
+7./opt/vc/bin/vcgencmd measure_temp - show the Temperature of the cpu in the raspberry, the max temperature need to be around 80c. 
+
