@@ -104,8 +104,7 @@ public class GripPipeline {
 		Threshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);*/
 
 		hsvThreshold(hsvThresholdInput, hsvThresholdOutput);
-
-		/*
+	
 		// Step CV_erode0:
 		Mat cvErodeSrc = hsvThresholdOutput;
 		Mat cvErodeKernel = new Mat();
@@ -115,6 +114,7 @@ public class GripPipeline {
 		Scalar cvErodeBordervalue = new Scalar(-1);
 		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
 
+
 		// Step CV_dilate0:
 		Mat cvDilateSrc = cvErodeOutput;
 		Mat cvDilateKernel = new Mat();
@@ -123,12 +123,11 @@ public class GripPipeline {
 		int cvDilateBordertype = Core.BORDER_CONSTANT;
 		Scalar cvDilateBordervalue = new Scalar(-1);
 		cvDilate(cvDilateSrc, cvDilateKernel, cvDilateAnchor, cvDilateIterations, cvDilateBordertype, cvDilateBordervalue, cvDilateOutput);
-		 */
-
+		 
 
 		if(!HSVValueShow){
 			// Step Find_Contours0:
-			Mat findContoursInput = hsvThresholdOutput;//cvDilateOutput;
+			Mat findContoursInput = cvDilateOutput;//hsvThresholdOutput;//cvDilateOutput;
 
 			findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 

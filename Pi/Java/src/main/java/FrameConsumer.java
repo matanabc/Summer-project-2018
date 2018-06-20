@@ -40,8 +40,10 @@ public class FrameConsumer implements Runnable{
 
 	private CvSource hsvSource = null;
 	private MjpegServer hsvStream = null;
+	
+	private boolean showHSV;
 
-	public FrameConsumer(BlockingQueue<MatTime> queue) {
+	public FrameConsumer(BlockingQueue<MatTime> queue, boolean showHSV) {
 		Properties properties = new Properties();
 		try {
 			properties.load(new FileInputStream(FILE_PLACE));//fill place to use
@@ -62,6 +64,8 @@ public class FrameConsumer implements Runnable{
 			this.hsvStream.setSource(hsvSource);
 
 			this.queue = queue;
+			
+			this.showHSV = showHSV;
 
 			this.VisionTable = NetworkTable.getTable(properties.getProperty("table", "SmartDashboard"));
 		} catch (IOException e) {
@@ -98,7 +102,7 @@ public class FrameConsumer implements Runnable{
 				MatTime inputImage = this.queue.take();
 				Imgproc.cvtColor(inputImage.getMat(), hsv, Imgproc.COLOR_BGR2HSV);//Change from rgb to hsv
 
-				if(VisionTable.getNumber("Set HSV", 0) == 1) {
+				if(this.showHSV) {
 
 					System.out.println("Changing hsv values!!!");
 					gripPipeline.setHSVThresholdValueInFile();//Take from the networkTable the value for HSV values, and save them in HSV value file
