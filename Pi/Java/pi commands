@@ -1,0 +1,12 @@
+pi commands:
+
+1.htop - show performance.
+
+2.cd - go to to directory.
+
+3.sudo modprobe bcm2835-v4l2 - make the pi camera as usb camera.
+
+4.raspistill -o output.jpg - take a photo from camera but from pi camera.
+
+5.ifconfig - show the ip of the raspberry.
+
