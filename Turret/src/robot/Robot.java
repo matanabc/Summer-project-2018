@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.ShooterSystem;
+import visionControllers.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +28,8 @@ public class Robot extends TimedRobot {
 	public static ShooterSystem shooterSystem;
 	public static DriveSystem driveSystem;
 	public static OI oi;
+	
+	public static Vision vision;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -39,6 +42,9 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		shooterSystem = new ShooterSystem();
 		driveSystem = new DriveSystem();
+		
+		vision = new Vision();
+		
 		oi = new OI();
 		oi.loadOIs();
 		

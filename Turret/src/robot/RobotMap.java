@@ -7,6 +7,8 @@
 
 package robot;
 
+import javax.xml.parsers.FactoryConfigurationError;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -14,30 +16,36 @@ package robot;
  * floating around.
  */
 public class RobotMap {
-	
+
 	//Joystick
 	public static final int ADEL_JOYSTICK_CHANEL = 0;
-	
+
 	//shooter
 	public static final int MASTER_SHOOTER_MOTOR_CAN = 0;
 	public static final int SLAVE_SHOOTER_MOTOR_CAN = 1;
 	public static final int SIDE_MOTOR_CAN = 2;
-	
+
 	//pwm
 	public static final int DRIVE_RIGHT_PWM = 0;
 	public static final int DRIVE_LEFT_PWM = 1;
-	
+
 	//drive
 	public static final double DRIVE_SLOW = 0.5;
-	
+
 	//Shooter
 	public static final double KP_SIDE = 2;
 	public static final double KI_SIDE = 0;
 	public static final double KD_SIDE = 60;
 	public static final int KINTEGRAL_I_ZONE_SIDE = (int) (1023/KP_SIDE);
-	
+
 	public static final double KP_SPEEN_SPEED = 0.2;
 	public static final double PULLS_PER_TIC = 4125;
 	public static final double ENCODER_POSITION_ANGLE = 0.03773584905660377358490566037736;
-	public static final double MAX_DECODER_HOSTORY_SIZE = 1000;
+
+	//vision
+	public static final int MAX_DECODER_HOSTORY_SIZE = 1000;
+	public static final double CAMERA_ANGLE = 52.3;
+	public static final double CAMERA_WIDTH = 160;
+	public static final String NT_VALUE_NAME = "TargetInfo";
+
 }
