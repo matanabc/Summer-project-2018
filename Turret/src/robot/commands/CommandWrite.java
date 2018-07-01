@@ -17,7 +17,9 @@ public abstract class CommandWrite extends Command {
     protected abstract void initializeWrite();
     
     protected void initialize() {   	
-    	write.add(commandName + " is initialize");
+    	//write.add(commandName + " is initialize");
+    	
+    	System.out.println(commandName + " is initialize");
     	
     	initializeWrite();
     }
@@ -25,7 +27,9 @@ public abstract class CommandWrite extends Command {
     protected abstract void executeWrite();
     
     protected void execute() {
-    	write.add(commandName + " is execute");
+    	//write.add(commandName + " is execute");
+    	
+    	System.out.println(commandName + " is execute");
     	
     	executeWrite();
     }
@@ -35,13 +39,17 @@ public abstract class CommandWrite extends Command {
     protected abstract void endWrite();
     
     protected void end() {
-    	write.add(commandName + " is end");
+    	//write.add(commandName + " is end");
+    	
+    	System.out.println(commandName + " is end");
     	
     	endWrite();
     }
 
     protected void interrupted() {
-    	write.add(commandName + " is interrupted");
+    	//write.add(commandName + " is interrupted");
+    	
+    	System.out.println(commandName + " is interrupted");
     	
     	endWrite();
     }

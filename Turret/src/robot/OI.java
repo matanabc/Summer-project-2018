@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.Shooter.ResetTalonsEncodersCommand;
 import robot.commands.Shooter.ShooterCommand;
-import robot.commands.drive.DriveSpeed;
 
 /**
  * This class is the glue that binds the controls on the physical operator
