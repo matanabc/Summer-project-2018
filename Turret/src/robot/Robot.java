@@ -7,8 +7,6 @@
 
 package robot;
 
-import java.util.LinkedList;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.ShooterSystem;
 import vision.visionControllers.Vision;
+import vision.visionHistoryClass.VisionHistory;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +25,12 @@ import vision.visionControllers.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static OI m_oi;
+
 	public static ShooterSystem shooterSystem;
 	public static DriveSystem driveSystem;
 	public static OI oi;
 
-	public static LinkedList<String> logFile;
+	//public static LinkedList<String> logFile;
 
 	public static Vision vision;
 
@@ -45,18 +44,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 
-		logFile = new LinkedList<>();
-		logFile.add("Robot is on");
+		//logFile = new LinkedList<>();
+		//logFile.add("Robot is on");
 
 		shooterSystem = new ShooterSystem();
 		driveSystem = new DriveSystem();
 
-		vision = new Vision();
-
 		oi = new OI();
 		oi.loadOIs();
 
-		m_oi = new OI();
+		vision = new Vision();
+
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -69,7 +67,7 @@ public class Robot extends TimedRobot {
 	 */	
 	@Override
 	public void disabledInit() {
-		logFile.add("Robot is disable");
+		//logFile.add("Robot is disable");
 	}
 
 	@Override
@@ -92,7 +90,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
-		logFile.add("Robot start auto");
+		//logFile.add("Robot start auto");
 
 		m_autonomousCommand = m_chooser.getSelected();
 
@@ -120,7 +118,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 
-		logFile.add("Robot is in driver control");
+		//logFile.add("Robot is in driver control");
 
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -140,7 +138,6 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		print();
-		//shooterSystem.setShootRPM(1);
 	}
 
 	/**
@@ -153,5 +150,10 @@ public class Robot extends TimedRobot {
 	public void print(){
 		SmartDashboard.putNumber("shooter velocity:", shooterSystem.getShooterVelocity());
 		SmartDashboard.putNumber("side position:", shooterSystem.getSideEncoderPosition());
+
+		SmartDashboard.putNumber("Navx angle", driveSystem.getAngleNavx());
+
+		SmartDashboard.putNumber("Error To Target", Math.abs(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget()) 
+													- Math.abs(Robot.driveSystem.getAngleNavx()));
 	}
 }

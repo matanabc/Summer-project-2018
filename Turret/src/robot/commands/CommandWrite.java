@@ -8,49 +8,55 @@ public abstract class CommandWrite extends Command {
 
 	protected LinkedList<String> write;
 	protected String commandName;
-	
-    public CommandWrite(String commadName, LinkedList<String> write) {
-    	this.commandName = commadName;
-    	this.write = write;
-    }
-    
-    protected abstract void initializeWrite();
-    
-    protected void initialize() {   	
-    	//write.add(commandName + " is initialize");
-    	
-    	System.out.println(commandName + " is initialize");
-    	
-    	initializeWrite();
-    }
+	protected boolean isExecute;
 
-    protected abstract void executeWrite();
-    
-    protected void execute() {
-    	//write.add(commandName + " is execute");
-    	
-    	System.out.println(commandName + " is execute");
-    	
-    	executeWrite();
-    }
+	public CommandWrite(String commadName, LinkedList<String> write) {
+		this.commandName = commadName;
+		this.write = write;
+		this.isExecute = false;
+	}
 
-    protected abstract boolean isFinished();
+	protected abstract void initializeWrite();
 
-    protected abstract void endWrite();
-    
-    protected void end() {
-    	//write.add(commandName + " is end");
-    	
-    	System.out.println(commandName + " is end");
-    	
-    	endWrite();
-    }
+	protected void initialize() {   	
+		//write.add(commandName + " is initialize");
 
-    protected void interrupted() {
-    	//write.add(commandName + " is interrupted");
-    	
-    	System.out.println(commandName + " is interrupted");
-    	
-    	endWrite();
-    }
+		this.isExecute = false;
+		System.out.println(commandName + " is initialize");
+
+		initializeWrite();
+	}
+
+	protected abstract void executeWrite();
+
+	protected void execute() {
+		//write.add(commandName + " is execute");
+		if(!this.isExecute){
+			
+			System.out.println(commandName + " is execute");
+			this.isExecute = true;
+		}
+		executeWrite();
+	}
+
+	protected abstract boolean isFinished();
+
+	protected abstract void endWrite();
+
+	protected void end() {
+		//write.add(commandName + " is end");
+		this.isExecute = false;
+		System.out.println(commandName + " is end");
+
+		endWrite();
+	}
+
+	protected void interrupted() {
+		//write.add(commandName + " is interrupted");
+		this.isExecute = false;
+		
+		System.out.println(commandName + " is interrupted");
+
+		endWrite();
+	}
 }

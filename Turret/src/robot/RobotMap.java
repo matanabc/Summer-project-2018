@@ -47,5 +47,6 @@ public class RobotMap {
 	public static final double CAMERA_ANGLE = 52.3;
 	public static final double CAMERA_WIDTH = 160;
 	public static final String NT_VALUE_NAME = "TargetInfo";
+	public static final double OFFSEAT_CAMERA_FROM_CENTER = 0;
 
 }

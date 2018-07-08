@@ -1,12 +1,17 @@
 package robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
-import robot.commands.drive.DriveWithJoysticks;
+import robot.commands.TestCommand;
+import robot.commands.TurnToTargetCommand;
 
 
 public class DriveSystem extends Subsystem{
@@ -19,16 +24,24 @@ public class DriveSystem extends Subsystem{
 
 	private DifferentialDrive driveSystem_ = new DifferentialDrive(leftMotor_, rightMotor_);
 	
+	private AHRS navX;
+	
 	public DriveSystem() {
-		this.leftMotorsPID = new PIDController(0, 0, 0, null, this.leftMotor_);
-		this.rightMotorsPID = new PIDController(0, 0, 0, null, this.rightMotor_);
+		CreatNavX();
+		
+		this.leftMotorsPID = new PIDController(0.1, 0, 0, navX, this.leftMotor_);
+		this.rightMotorsPID = new PIDController(0.1, 0, 0, navX, this.rightMotor_);
+		this.leftMotorsPID.setOutputRange(-0.3, 0.3);
+		this.rightMotorsPID.setOutputRange(-0.3, 0.3);
 		disablePIDTurn();
+		
+		
 	}
 
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		setDefaultCommand(new DriveWithJoysticks());
+		setDefaultCommand(new TurnToTargetCommand());//DriveWithJoysticks());
 	}
 
 	public void arcade(double speed, double turn){
@@ -62,5 +75,33 @@ public class DriveSystem extends Subsystem{
 	public void setSetpointPIDTurn(double setpoint) {
 		leftMotorsPID.setSetpoint(setpoint);
 		rightMotorsPID.setSetpoint(setpoint);
+	}
+	
+	public void CreatNavX() {
+
+		try {
+			/***********************************************************************
+			 * navX-MXP:
+			 * - Communication via RoboRIO MXP (SPI, I2C, TTL UART) and USB.            
+			 * - See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface.
+			 * 
+			 * navX-Micro:
+			 * - Communication via I2C (RoboRIO MXP or Onboard) and USB.
+			 * - See http://navx-micro.kauailabs.com/guidance/selecting-an-interface.
+			 * 
+			 * Multiple navX-model devices on a single robot are supported.
+			 ************************************************************************/
+			navX = new AHRS(SPI.Port.kMXP); 
+			SmartDashboard.putBoolean("NavX on:", true);
+
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+			SmartDashboard.putBoolean("NavX on:", false);
+			//CreatNavX(); try to re-connect
+		}		
+	}
+	
+	public float getAngleNavx(){
+		return navX.getYaw();
 	}
 }

@@ -20,7 +20,7 @@ public class TestCommand extends CommandWrite {
 	@Override
 	protected void executeWrite() {
 		speed_ = Robot.oi.AdelStick.getRawAxis(1);
-		turn_ = Robot.oi.AdelStick.getRawAxis(3) - Robot.oi.AdelStick.getRawAxis(2);//4	-
+		turn_ = Robot.oi.AdelStick.getRawAxis(2);//4	-
 	
 		Robot.driveSystem.arcade(-speed_, turn_);	
 		
