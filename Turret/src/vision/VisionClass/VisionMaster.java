@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import vision.VisionControllers.VisionPanController;
+import vision.VisionControllers.VisionControllerInterface;
 
 public class VisionMaster{
 
@@ -17,15 +17,14 @@ public class VisionMaster{
 	protected VisionAddHistoryTrhad addHistoryTrhad;
 	private VisionData data;
 	private double offSeat;
-	private VisionPanController VC1;
-	private VisionPanController VC2;
+	private VisionControllerInterface VC1;
 
 	//Tree of history position from encoder
 	private TreeMap<Long,Double> panHistory = new TreeMap<Long,Double>();
 	private TreeMap<Long,Double> tiltHistory = new TreeMap<Long,Double>();
 
 
-	public VisionMaster(VisionPanController VC, int maxDecoderHestorySize, double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
+	public VisionMaster(VisionControllerInterface VC, int maxDecoderHestorySize, double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
 		this.maxDecoderHestorySize= maxDecoderHestorySize;
 		this.pixelToAngle = cameraAngle / cameraWidth; 
 		this.senterInPixel = cameraWidth / 2;
@@ -37,53 +36,20 @@ public class VisionMaster{
 		startAddToHistoryTrhad();
 	}
 
-	public VisionMaster(VisionPanController VC1, VisionPanController VC2, int maxDecoderHestorySize, double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
-		this.maxDecoderHestorySize= maxDecoderHestorySize;
-		this.pixelToAngle = cameraAngle / cameraWidth; 
-		this.senterInPixel = cameraWidth / 2;
-		this.NTValueName = NTValueName;
-		this.offSeat = offSeat;
-		this.VC1 = VC1;
-		this.VC2 = VC2;
-
-		addHistoryTrhad = new VisionAddHistoryTrhad();
-		startAddToHistoryTrhad();
-	}
-
-	//need to bee in 
-	protected double targetHeightToDistance(double targetHeight){
-		return targetHeight;
-	}
-
 	//Don't change if you don't need to!!!
 	public void addPanAndTiltPositionToHistory() {
 		//Add encoder position and time to history
 
-		if(VC2 == null){
+		panHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getPanSource());
+		tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getTiltSource());
 
-			panHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getPanSource());
-			tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getPanSource());
-
-			// remove the lowest key so he don't grow forever...
-			if(panHistory.size() > this.maxDecoderHestorySize) {
-				panHistory.remove(panHistory.firstKey());	
-			}else if(tiltHistory.size() > this.maxDecoderHestorySize){
-				tiltHistory.remove(tiltHistory.firstKey());
-			}
-		}else{
-			panHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getPanSource());
-			tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC2.getPanSource());
-
-			// remove the lowest key so he don't grow forever...
-			if(panHistory.size() > this.maxDecoderHestorySize) {
-				panHistory.remove(panHistory.firstKey());	
-			}else if(tiltHistory.size() > this.maxDecoderHestorySize){
-				tiltHistory.remove(tiltHistory.firstKey());
-			}
+		// remove the lowest key so he don't grow forever...
+		if(panHistory.size() > this.maxDecoderHestorySize) {
+			panHistory.remove(panHistory.firstKey());	
+		}else if(tiltHistory.size() > this.maxDecoderHestorySize){
+			tiltHistory.remove(tiltHistory.firstKey());
 		}
-		
-		
-		//System.out.println("add to history");
+
 	}
 
 	//Don't change if you don't need to!!!
@@ -102,7 +68,7 @@ public class VisionMaster{
 		//Return encoder position form the time
 		return panTime.getValue();
 	}
-	
+
 	protected double getTiltPositionFromTime(Long time) {
 		//check if is bigger then 0
 		if(tiltHistory.size()==0) return 0;
@@ -147,9 +113,9 @@ public class VisionMaster{
 
 						offSeat, //offSeat from target if camera is not in the center
 
-						Double.parseDouble(TargetInfo[1])); //target Height in pixel
+						VC1.TargetHightToDistance(Double.parseDouble(TargetInfo[1]))); //target Height in pixel
+
 				
-						//if VC2 == null like addPanAndTiltPositionToHistory()
 
 			}
 		}

@@ -26,7 +26,7 @@ public class VisionPanPWMCommand extends Command {
 		pidV_.maxOutput = maxOutput;
 		pidV_.maxErr = maxErr;
 
-		requires(VC.getSubsystem());
+		requires(VC.getPanSubsystem());
 	}
 
 	// Called just before this Command runs the first time
@@ -38,13 +38,13 @@ public class VisionPanPWMCommand extends Command {
 	protected void execute() {
 
 		//pidV_.pos = system_ != null ? system_.getPosition() : 0; 
-		pidV_.pos = VC.getSource();
+		pidV_.pos = VC.getPanSource();
 
 		pidV_.error = VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() - pidV_.pos : 0;	
 		pidV_.output =	pidV_.error * gains_.kp + pidV_.errorSum * gains_.ki + (pidV_.error - pidV_.lastError) * gains_.kd;	
 
-		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
-		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid pos : ", pidV_.pos);
+		SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+		SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid pos : ", pidV_.pos);
 		
 		SmartDashboard.putBoolean("VM is Null", VM == null);
 
@@ -61,10 +61,10 @@ public class VisionPanPWMCommand extends Command {
 
 		}
 
-		VC.setOutput(pidV_.output);
+		VC.setPanOutput(pidV_.output);
 
-		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid Error: = ", pidV_.error);
-		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid Output: = ", pidV_.output);
+		SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid Error: = ", pidV_.error);
+		SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid Output: = ", pidV_.output);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -17,7 +17,7 @@ public class VisionPanTanlonSRXCommand extends Command {
     	this.VC = VC;
     	this.VM = VM;
     	
-    	requires(VC.getSubsystem());
+    	requires(VC.getPanSubsystem());
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +26,7 @@ public class VisionPanTanlonSRXCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	VC.setOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+    	VC.setPanOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -8,7 +8,7 @@ public class VisionAddHistoryTrhad  implements Runnable{
 	public void run() {
 		while(true){
 			//Robot.vision.addEncoderPositionToHistory();
-			Robot.VM.addEncoderPositionToHistory();
+			Robot.VM.addPanAndTiltPositionToHistory();
 		}
 	}
 

@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		
 
-		VM = new VisionMaster(oi.DPV, RobotMap.MAX_DECODER_HOSTORY_SIZE, RobotMap.CAMERA_ANGLE,
+		VM = new VisionMaster(oi.VC, RobotMap.MAX_DECODER_HOSTORY_SIZE, RobotMap.CAMERA_ANGLE,
 				RobotMap.CAMERA_WIDTH, RobotMap.NT_VALUE_NAME, RobotMap.OFFSEAT_CAMERA_FROM_CENTER);
 		
 		oi.loadOIs();
