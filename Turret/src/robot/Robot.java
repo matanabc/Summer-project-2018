@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.ShooterSystem;
 import vision.visionControllers.Vision;
-import vision.visionHistoryClass.VisionHistory;
 
 /**
  * The VM is configured to automatically run this class, and to call the

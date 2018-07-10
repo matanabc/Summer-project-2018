@@ -31,11 +31,11 @@ public abstract class CommandWrite extends Command {
 
 	protected void execute() {
 		//write.add(commandName + " is execute");
-		if(!this.isExecute){
-			
+		if(!this.isExecute){	
 			System.out.println(commandName + " is execute");
 			this.isExecute = true;
 		}
+		
 		executeWrite();
 	}
 
@@ -46,6 +46,7 @@ public abstract class CommandWrite extends Command {
 	protected void end() {
 		//write.add(commandName + " is end");
 		this.isExecute = false;
+		
 		System.out.println(commandName + " is end");
 
 		endWrite();

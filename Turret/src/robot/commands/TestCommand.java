@@ -1,5 +1,7 @@
 package robot.commands;
 
+import java.util.LinkedList;
+
 import robot.Robot;
 
 public class TestCommand extends CommandWrite {
@@ -7,7 +9,7 @@ public class TestCommand extends CommandWrite {
 	private double speed_, turn_;
 	
 	public TestCommand() {
-		super("Test Command", Robot.logFile);
+		super("Test Command", new LinkedList<String>());
 		
 		requires(Robot.driveSystem);
 	}

@@ -49,7 +49,7 @@ public abstract class VisionHistory{
 	}
 
 	//Don't change if you don't need to!!!
-	public double getEncoderPositionFromTime(Long time) {
+	protected double getPositionFromTime(Long time) {
 		//check if is bigger then 0
 		if(encoderHistory.size()==0) return 0;
 
@@ -82,7 +82,8 @@ public abstract class VisionHistory{
 				lastTime = Double.parseDouble(TargetInfo[2]);//change the last time 
 
 				data = new VisionData(
-						(getEncoderPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
+						
+						(getPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
 
 						- 	//need to check it it cold be - or +
 
@@ -93,6 +94,7 @@ public abstract class VisionHistory{
 						offSeat, //offSeat from target if camera is not in the center
 
 						targetHeightToDistance(Double.parseDouble(TargetInfo[1]))); //target Height in pixel
+				
 			}
 		}
 		//return new VisionData(0, 0); //there is problem with the data from the vision
@@ -100,9 +102,9 @@ public abstract class VisionHistory{
 	}
 
 	//Don't change if you don't need to!!!
-	public void startAddToHistoryTrhad(){
+	protected void startAddToHistoryTrhad(){
 		new Thread(addHistoryTrhad).start();
-	}
+	}	
 }
 
 
