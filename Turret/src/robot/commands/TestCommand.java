@@ -22,7 +22,7 @@ public class TestCommand extends CommandWrite {
 	@Override
 	protected void executeWrite() {
 		speed_ = Robot.oi.AdelStick.getRawAxis(1);
-		turn_ = Robot.oi.AdelStick.getRawAxis(2);//4	-
+		turn_ = Robot.oi.AdelStick.getRawAxis(4);//4	-
 	
 		Robot.driveSystem.arcade(-speed_, turn_);	
 		
@@ -36,5 +36,19 @@ public class TestCommand extends CommandWrite {
 	@Override
 	protected void endWrite() {
 		Robot.driveSystem.tank(0,0);
+	}
+	
+	
+	//---If you whant you can add them---\\
+	protected String whenInitializeWrite(){
+		return "geting reade";
+	}
+	
+	protected String whenExecuteWrite(){
+		return "Starting!!!!!!";
+	}
+	
+	protected String whenEndWrite(){
+		return "Good by";
 	}
 }

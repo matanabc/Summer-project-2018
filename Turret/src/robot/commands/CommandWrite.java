@@ -17,22 +17,30 @@ public abstract class CommandWrite extends Command {
 	}
 
 	protected abstract void initializeWrite();
+	
+	protected String whenInitializeWrite(){
+		return "";
+	}
 
 	protected void initialize() {   	
 		//write.add(commandName + " is initialize");
 
 		this.isExecute = false;
-		System.out.println(commandName + " is initialize");
+		System.out.println(commandName + " is initialize, " + whenInitializeWrite());
 
 		initializeWrite();
 	}
 
 	protected abstract void executeWrite();
+	
+	protected String whenExecuteWrite(){
+		return "";
+	}
 
 	protected void execute() {
 		//write.add(commandName + " is execute");
 		if(!this.isExecute){	
-			System.out.println(commandName + " is execute");
+			System.out.println(commandName + " is execute, " + whenExecuteWrite());
 			this.isExecute = true;
 		}
 		
@@ -42,12 +50,16 @@ public abstract class CommandWrite extends Command {
 	protected abstract boolean isFinished();
 
 	protected abstract void endWrite();
+	
+	protected String whenEndWrite(){
+		return "";
+	}
 
 	protected void end() {
 		//write.add(commandName + " is end");
 		this.isExecute = false;
 		
-		System.out.println(commandName + " is end");
+		System.out.println(commandName + " is end, " + whenEndWrite());
 
 		endWrite();
 	}

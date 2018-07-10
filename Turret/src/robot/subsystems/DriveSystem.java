@@ -2,6 +2,7 @@ package robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SPI;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
 import robot.commands.TestCommand;
-import robot.commands.TurnToTargetCommand;
+import robot.commands.drive.DriveWithJoysticks;
 
 
 public class DriveSystem extends Subsystem{
@@ -25,6 +26,8 @@ public class DriveSystem extends Subsystem{
 	private DifferentialDrive driveSystem_ = new DifferentialDrive(leftMotor_, rightMotor_);
 	
 	private AHRS navX;
+	
+	private PID_Gains visionGains = new PID_Gains(0.5, 0, 0);
 	
 	public DriveSystem() {
 		CreatNavX();
@@ -41,7 +44,7 @@ public class DriveSystem extends Subsystem{
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		setDefaultCommand(new TurnToTargetCommand());//DriveWithJoysticks());
+		setDefaultCommand(new TestCommand());
 	}
 
 	public void arcade(double speed, double turn){
@@ -75,6 +78,10 @@ public class DriveSystem extends Subsystem{
 	public void setSetpointPIDTurn(double setpoint) {
 		leftMotorsPID.setSetpoint(setpoint);
 		rightMotorsPID.setSetpoint(setpoint);
+	}
+	
+	public PID_Gains getVisoinPIDGains(){
+		return visionGains;
 	}
 	
 	public void CreatNavX() {

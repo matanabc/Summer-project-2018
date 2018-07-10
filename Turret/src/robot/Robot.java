@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.ShooterSystem;
-import vision.visionControllers.Vision;
+import vision.VisionClass.VisionMaster;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
 
 	//public static LinkedList<String> logFile;
 
-	public static Vision vision;
+	public static VisionMaster VM;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -50,9 +50,12 @@ public class Robot extends TimedRobot {
 		driveSystem = new DriveSystem();
 
 		oi = new OI();
-		oi.loadOIs();
+		
 
-		vision = new Vision();
+		VM = new VisionMaster(oi.DPV, RobotMap.MAX_DECODER_HOSTORY_SIZE, RobotMap.CAMERA_ANGLE,
+				RobotMap.CAMERA_WIDTH, RobotMap.NT_VALUE_NAME, RobotMap.OFFSEAT_CAMERA_FROM_CENTER);
+		
+		oi.loadOIs();
 
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -152,7 +155,10 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putNumber("Navx angle", driveSystem.getAngleNavx());
 
-		SmartDashboard.putNumber("Error To Target", Math.abs(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget()) 
-													- Math.abs(Robot.driveSystem.getAngleNavx()));
+		SmartDashboard.putNumber("Error To Target", Math.abs(Robot.VM.getAngleAndDistanceToTarget().getAngleToTarget()) 
+				- Math.abs(Robot.driveSystem.getAngleNavx()));
+
+		SmartDashboard.putNumber("Target Angle", Robot.VM.getAngleAndDistanceToTarget().getAngleToTarget());
+
 	}
 }

@@ -14,14 +14,14 @@ public class TurnToTargetCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.driveSystem.setSetpointPIDTurn(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
-		Robot.driveSystem.enablePIDTurn();
+		//Robot.driveSystem.setSetpointPIDTurn(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
+		//Robot.driveSystem.enablePIDTurn();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveSystem.setSetpointPIDTurn(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
-		System.out.println(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
+		//Robot.driveSystem.setSetpointPIDTurn(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
+		//System.out.println(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget());
 
 		/*double t = Math.abs(Robot.vision.getAngleAndDistanceToTarget().getAngleToTarget()) - Math.abs(Robot.driveSystem.getAngleNavx());
 		SmartDashboard.putNumber("t", t);*/

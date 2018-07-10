@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.Shooter.ResetTalonsEncodersCommand;
 import robot.commands.Shooter.ShooterCommand;
+import vision.VisionCommands.VisionPanPWMCommand;
+import vision.VisionControllers.DrivePanVisionPWMController;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,6 +23,8 @@ public class OI {
 	public Joystick AdelStick = new Joystick(RobotMap.ADEL_JOYSTICK_CHANEL);
 
 	public Button[] AdelBtns = new Button[12];
+	
+	public DrivePanVisionPWMController DPV = new DrivePanVisionPWMController();
 
 	public OI(){
 		for (int i = 0; i < 12; i ++){
@@ -37,5 +41,7 @@ public class OI {
 		AdelBtns[0].whileHeld(new ShooterCommand(0));
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 		//AdelBtns[2].whileHeld(new ShooterCommand(0.25));//Right
+		
+		AdelBtns[2].whileHeld(new VisionPanPWMCommand(Robot.VM, DPV, Robot.driveSystem.getVisoinPIDGains(), 0.4, 1));
 	}
 }
