@@ -9,8 +9,8 @@ import vision.VisionControllers.VisionController;
  */
 public class VisionPanAndTiltTalonSRXSequentialCommand extends CommandGroup {
 
-    public VisionPanAndTiltTalonSRXSequentialCommand(VisionMaster VM, VisionController VC, double maxOutputPan, double maxErrorPan) {
+    public VisionPanAndTiltTalonSRXSequentialCommand(VisionMaster VM, VisionController VC) {
     	addSequential(new VisionPanTalonSRXCommand(VM, VC));
-    	addSequential(new VisionTiltTalonSRXCommand());
+    	addSequential(new VisionTiltTalonSRXCommand(VM, VC));
     }
 }

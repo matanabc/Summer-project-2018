@@ -17,14 +17,14 @@ public class VisionPanPWMCommand extends Command {
 	private PID_Variables pidV_;
 	private VisionMaster VM;
 
-	public VisionPanPWMCommand(VisionMaster VM, VisionController VC, PID_Gains gains, double maxOutput, double maxErr) {
+	public VisionPanPWMCommand(VisionMaster VM, VisionController VC) {
 
 		this.VC = VC;
-		this.gains_ = gains;
+		this.gains_ = VC.getPanGains();
 		this.VM = VM;
 		pidV_ = new PID_Variables();
-		pidV_.maxOutput = maxOutput;
-		pidV_.maxErr = maxErr;
+		pidV_.maxOutput = VC.panMaxOutput();
+		pidV_.maxErr = VC.panMaxerror();
 
 		requires(VC.getPanSubsystem());
 	}
@@ -74,7 +74,7 @@ public class VisionPanPWMCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		VC.setOutput(0);
+		VC.setPanOutput(0);
 	}
 
 	// Called when another command which requires one or more of the same
