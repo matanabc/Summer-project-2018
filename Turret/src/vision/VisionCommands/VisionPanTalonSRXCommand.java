@@ -7,12 +7,12 @@ import vision.VisionControllers.VisionController;
 /**
  *
  */
-public class VisionPanTanlonSRXCommand extends Command {
+public class VisionPanTalonSRXCommand extends Command {
 
 	private VisionController VC;
 	private VisionMaster VM;
 
-    public VisionPanTanlonSRXCommand(VisionMaster VM, VisionController VC) {
+    public VisionPanTalonSRXCommand(VisionMaster VM, VisionController VC) {
     	
     	this.VC = VC;
     	this.VM = VM;
