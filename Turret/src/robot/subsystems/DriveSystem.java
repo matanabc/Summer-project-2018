@@ -80,7 +80,11 @@ public class DriveSystem extends Subsystem{
 		rightMotorsPID.setSetpoint(setpoint);
 	}
 	
-	public PID_Gains getVisoinPIDGains(){
+	public PID_Gains getVisoinPanPIDGains(){
+		return visionGains;
+	}
+	
+	public PID_Gains getVisoinTiltPIDGains(){
 		return visionGains;
 	}
 	

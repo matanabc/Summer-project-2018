@@ -1,28 +1,19 @@
 package vision.VisionCommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import robot.Robot;
+import vision.VisionClass.VisionMaster;
+import vision.VisionControllers.VisionController;
 
 /**
  *
  */
 public class VisionPanAndTiltPWMSequentialCommand extends CommandGroup {
 
-    public VisionPanAndTiltPWMSequentialCommand() {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    public VisionPanAndTiltPWMSequentialCommand(VisionMaster VM, VisionController VC, double maxOutput, double maxError) {
+       addSequential(new VisionPanPWMCommand(VM, VC, Robot.driveSystem.getVisoinPanPIDGains(),
+    		   									maxOutput, maxError));
+       
+       addSequential(new VisionTiltPWMCommand());
     }
 }

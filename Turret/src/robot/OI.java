@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.Shooter.ResetTalonsEncodersCommand;
 import robot.commands.Shooter.ShooterCommand;
+import vision.VisionCommands.VisionPanAndTiltPWMSequentialCommand;
 import vision.VisionCommands.VisionPanPWMCommand;
 import vision.VisionControllers.VisionController;
 
@@ -42,6 +43,6 @@ public class OI {
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 		//AdelBtns[2].whileHeld(new ShooterCommand(0.25));//Right
 		
-		AdelBtns[2].whileHeld(new VisionPanPWMCommand(Robot.VM, VC, Robot.driveSystem.getVisoinPIDGains(), 0.4, 1));
+		AdelBtns[2].whileHeld(new VisionPanAndTiltPWMSequentialCommand(Robot.VM, VC, 0.4, 1));
 	}
 }
