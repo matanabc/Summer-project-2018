@@ -9,8 +9,8 @@ import vision.VisionControllers.VisionController;
  */
 public class VisionPanTalonSRXAndTiltPWMSequentialCommand extends CommandGroup {
 
-    public VisionPanTalonSRXAndTiltPWMSequentialCommand(VisionMaster VM, VisionController VC) {
+    public VisionPanTalonSRXAndTiltPWMSequentialCommand(VisionMaster VM, VisionController VC, String chose) {
     	addSequential(new VisionPanTalonSRXCommand(VM, VC));
-    	addSequential(new VisionTiltPWMCommand(VM, VC));
+    	addSequential(new VisionTiltPWMCommand(VM, VC, chose));
     }
 }

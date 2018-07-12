@@ -32,12 +32,6 @@ public class VisionController implements VisionControllerInterface{
 	}
 
 	@Override
-	public double TargetHightToDistance(double targetHight) {
-		// TODO Auto-generated method stub
-		return targetHight;
-	}
-
-	@Override
 	public void setPanOutput(double output) {
 		// TODO Auto-generated method stub
 		Robot.driveSystem.tank(output, -output);
@@ -82,6 +76,12 @@ public class VisionController implements VisionControllerInterface{
 	public double tiltMaxerror() {
 		// TODO Auto-generated method stub
 		return RobotMap.TILT_MAX_ERROR;
+	}
+	
+	@Override
+	public double TargetHightToDistance(double targetHight) {
+		// TODO Auto-generated method stub
+		return targetHight;
 	}
 
 	@Override

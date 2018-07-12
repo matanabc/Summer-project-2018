@@ -16,12 +16,15 @@ public class VisionTiltPWMCommand extends Command {
 	private PID_Gains gains_;
 	private PID_Variables pidV_;
 	private VisionMaster VM;
+	private String chose;
 
-	public VisionTiltPWMCommand(VisionMaster VM, VisionController VC) {
+	public VisionTiltPWMCommand(VisionMaster VM, VisionController VC, String chose) {
 		
 		this.VC = VC;
 		this.gains_ = VC.getTiltGains();
 		this.VM = VM;
+		this.chose = chose;
+		
 		pidV_ = new PID_Variables();
 		pidV_.maxOutput = VC.tiltMaxOutput();
 		pidV_.maxErr = VC.tiltMaxerror();
@@ -38,7 +41,7 @@ public class VisionTiltPWMCommand extends Command {
 	protected void execute() {
 		pidV_.pos = VC.getTiltSource();
 
-		pidV_.error = VM != null ? VM.getAngleAndDistanceToTarget().getPixelHeightToTarget() - pidV_.pos : 0;	
+		pidV_.error = VM != null ? targetHightMath(VM.getAngleAndDistanceToTarget().getPixelHeightToTarget()) - pidV_.pos : 0;	
 		pidV_.output =	pidV_.error * gains_.kp + pidV_.errorSum * gains_.ki + (pidV_.error - pidV_.lastError) * gains_.kd;	
 
 		SmartDashboard.putNumber(VC.getTiltSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getPixelHeightToTarget() : 0);
@@ -79,5 +82,19 @@ public class VisionTiltPWMCommand extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		end();
+	}
+	
+	protected double targetHightMath(double targetHight) {
+		if(chose.equals("RPM")) {
+			return VC.TargetHightToRPM(targetHight);
+			
+		}else if (chose.equals("Distance")) {
+			return VC.TargetHightToDistance(targetHight);
+			
+		}else if (chose.equals("Angle")) {
+			return VC.TargetHightToAngle(targetHight);
+		}else {
+			return 0;
+		}
 	}
 }
