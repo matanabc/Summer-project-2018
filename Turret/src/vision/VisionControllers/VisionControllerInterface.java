@@ -4,6 +4,14 @@ import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public interface VisionControllerInterface{
+	
+	public Subsystem getPanSubsystem();
+	
+	public Subsystem getTiltSubsystem();
+	
+	public PID_Gains getPanGains();
+	
+	public PID_Gains getTiltGains();
 
 	public double getPanSource();
 
@@ -12,14 +20,6 @@ public interface VisionControllerInterface{
 	public void setPanOutput(double output);
 
 	public void setTiltOutput(double output);
-
-	public Subsystem getPanSubsystem();
-	
-	public Subsystem getTiltSubsystem();
-	
-	public PID_Gains getPanGains();
-	
-	public PID_Gains getTiltGains();
 	
 	public double panMaxOutput();
 	

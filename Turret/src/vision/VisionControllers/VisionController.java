@@ -9,90 +9,90 @@ public class VisionController implements VisionControllerInterface{
 
 	@Override
 	public double getPanSource() {
-		// TODO Auto-generated method stub
+		// Need to return Source for PID
 		return Robot.driveSystem.getAngleNavx();
 	}
 
 	@Override
 	public double getTiltSource() {
-		// TODO Auto-generated method stub
+		// Need to return Source for PID
 		return 0;
 	}
 
 	@Override
 	public Subsystem getPanSubsystem() {
-		// TODO Auto-generated method stub
+		// Need to return the subsystem who will do the pan
 		return Robot.driveSystem;
 	}
 
 	@Override
 	public Subsystem getTiltSubsystem() {
-		// TODO Auto-generated method stub
+		// Need to return the subsystem who will do the tilt
 		return null;
 	}
 
 	@Override
 	public void setPanOutput(double output) {
-		// TODO Auto-generated method stub
+		// Need to put the output value for motors
 		Robot.driveSystem.tank(output, -output);
 	}
 
 	@Override
 	public void setTiltOutput(double output) {
-		// TODO Auto-generated method stub
+		// Need to put the output value for motors
 	}
 
 	@Override
 	public PID_Gains getPanGains() {
-		// TODO Auto-generated method stub
+		// Need to return PID Gains for pan system
 		return Robot.driveSystem.getVisoinPanPIDGains();
 	}
 
 	@Override
 	public PID_Gains getTiltGains() {
-		// TODO Auto-generated method stub
+		// Need to return PID Gains for tilt system
 		return Robot.driveSystem.getVisoinTiltPIDGains();
 	}
 
 	@Override
 	public double panMaxOutput() {
-		// TODO Auto-generated method stub
+		// Need to return pan max output
 		return RobotMap.PAN_MAX_OUTPUT;
 	}
 
 	@Override
 	public double tiltMaxOutput() {
-		// TODO Auto-generated method stub
+		// Need to return tilt max output
 		return RobotMap.TILT_MAX_OUTPUT;
 	}
 
 	@Override
 	public double panMaxerror() {
-		// TODO Auto-generated method stub
+		// Need to return pan max error
 		return RobotMap.PAN_MAX_ERROR;
 	}
 
 	@Override
 	public double tiltMaxerror() {
-		// TODO Auto-generated method stub
+		// Need to return tilt max error
 		return RobotMap.TILT_MAX_ERROR;
 	}
-	
+
 	@Override
 	public double TargetHightToDistance(double targetHight) {
-		// TODO Auto-generated method stub
+		// Need to return the calculate from target height to distance
 		return targetHight;
 	}
 
 	@Override
 	public double TargetHightToRPM(double targetHight) {
-		// TODO Auto-generated method stub
+		// Need to return the calculate from target height to RPM
 		return 0;
 	}
 
 	@Override
 	public double TargetHightToAngle(double targetHight) {
-		// TODO Auto-generated method stub
+		// Need to return the calculate from target height to angle
 		return 0;
 	}
 }
