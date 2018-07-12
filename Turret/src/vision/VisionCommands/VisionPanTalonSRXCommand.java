@@ -1,6 +1,7 @@
 package vision.VisionCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import vision.VisionClass.VisionMaster;
 import vision.VisionControllers.VisionController;
 
@@ -27,6 +28,8 @@ public class VisionPanTalonSRXCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	VC.setPanOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+    	SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

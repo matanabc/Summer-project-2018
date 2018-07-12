@@ -11,8 +11,8 @@ public class VisionPanAndTiltPWMSequentialCommand extends CommandGroup {
 
     public VisionPanAndTiltPWMSequentialCommand(VisionMaster VM, VisionController VC) {
     	
-       addSequential(new VisionPanPWMCommand(VM, VC, VC.getPanGains(), VC.panMaxOutput(), VC.panMaxerror()));
+       addSequential(new VisionPanPWMCommand(VM, VC));
        
-       addSequential(new VisionTiltPWMCommand(VM, VC, VC.getTiltGains(), VC.tiltMaxOutput(), VC.tiltMaxerror()));
+       addSequential(new VisionTiltPWMCommand(VM, VC));
     }
 }

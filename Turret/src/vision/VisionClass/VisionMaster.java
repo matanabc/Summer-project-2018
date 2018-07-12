@@ -17,20 +17,24 @@ public class VisionMaster{
 	protected VisionAddHistoryTrhad addHistoryTrhad;
 	private VisionData data;
 	private double offSeat;
-	private VisionControllerInterface VC1;
+	private VisionControllerInterface VC;
+	//private String chose;
 
 	//Tree of history position from encoder
 	private TreeMap<Long,Double> panHistory = new TreeMap<Long,Double>();
 	private TreeMap<Long,Double> tiltHistory = new TreeMap<Long,Double>();
 
 
-	public VisionMaster(VisionControllerInterface VC, int maxDecoderHestorySize, double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
+	public VisionMaster(VisionControllerInterface VC, int maxDecoderHestorySize, double cameraAngle, 
+			double cameraWidth, String NTValueName, double offSeat) {
+
 		this.maxDecoderHestorySize= maxDecoderHestorySize;
 		this.pixelToAngle = cameraAngle / cameraWidth; 
 		this.senterInPixel = cameraWidth / 2;
 		this.NTValueName = NTValueName;
 		this.offSeat = offSeat;
-		this.VC1 = VC;
+		this.VC = VC;
+		//this.chose = chose;
 
 		addHistoryTrhad = new VisionAddHistoryTrhad();
 		startAddToHistoryTrhad();
@@ -40,8 +44,8 @@ public class VisionMaster{
 	public void addPanAndTiltPositionToHistory() {
 		//Add encoder position and time to history
 
-		panHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getPanSource());
-		tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC1.getTiltSource());
+		panHistory.put(Calendar.getInstance().getTimeInMillis(), VC.getPanSource());
+		tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC.getTiltSource());
 
 		// remove the lowest key so he don't grow forever...
 		if(panHistory.size() > this.maxDecoderHestorySize) {
@@ -113,9 +117,9 @@ public class VisionMaster{
 
 						offSeat, //offSeat from target if camera is not in the center
 
-						VC1.TargetHightToDistance(Double.parseDouble(TargetInfo[1]))); //target Height in pixel
+						Double.parseDouble(TargetInfo[1])); //target Height in pixel
 
-				
+
 
 			}
 		}
@@ -127,6 +131,20 @@ public class VisionMaster{
 	protected void startAddToHistoryTrhad(){
 		new Thread(addHistoryTrhad).start();
 	}	
+
+	/*protected double TargetHightMath(double targetHigth) {
+		if(chose.equals("RPM")) {
+			return VC.TargetHightToRPM(targetHigth);
+			
+		}else if (chose.equals("Distance")) {
+			return VC.TargetHightToDistance(targetHigth);
+			
+		}else if (chose.equals("Angle")) {
+			return VC.TargetHightToAngle(targetHigth);
+		}else {
+			return 0;
+		}
+	}*/
 }
 
 

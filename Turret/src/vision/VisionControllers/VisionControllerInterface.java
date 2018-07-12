@@ -30,4 +30,8 @@ public interface VisionControllerInterface{
 	public double tiltMaxerror();
 	
 	public double TargetHightToDistance(double targetHight);
+	
+	public double TargetHightToRPM(double targetHight);
+	
+	public double TargetHightToAngle(double targetHight);
 }

@@ -46,7 +46,6 @@ public class VisionController implements VisionControllerInterface{
 	@Override
 	public void setTiltOutput(double output) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -83,5 +82,17 @@ public class VisionController implements VisionControllerInterface{
 	public double tiltMaxerror() {
 		// TODO Auto-generated method stub
 		return RobotMap.TILT_MAX_ERROR;
+	}
+
+	@Override
+	public double TargetHightToRPM(double targetHight) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double TargetHightToAngle(double targetHight) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
