@@ -17,43 +17,106 @@ public class VisionMaster{
 	protected VisionAddHistoryTrhad addHistoryTrhad;
 	private VisionData data;
 	private double offSeat;
-	private VisionControllerInterface VC;
+	private VisionControllerInterface VCTilt;
+	private VisionControllerInterface VCPan;
+	private boolean singleTbothF;
+	private  boolean panTtiltF;
+
 	//private String chose;
 
 	//Tree of history position from encoder
-	private TreeMap<Long,Double> panHistory = new TreeMap<Long,Double>();
-	private TreeMap<Long,Double> tiltHistory = new TreeMap<Long,Double>();
+	private TreeMap<Long,Double> panHistory;
+	private TreeMap<Long,Double> tiltHistory;
 
 
 	public VisionMaster(VisionControllerInterface VC, int maxDecoderHestorySize, double cameraAngle, 
-			double cameraWidth, String NTValueName, double offSeat) {
+			double cameraWidth, String NTValueName, double offSeat, boolean panTtiltF) {
 
 		this.maxDecoderHestorySize= maxDecoderHestorySize;
 		this.pixelToAngle = cameraAngle / cameraWidth; 
 		this.senterInPixel = cameraWidth / 2;
 		this.NTValueName = NTValueName;
 		this.offSeat = offSeat;
-		this.VC = VC;
-		//this.chose = chose;
+		
+		if(panTtiltF){
+			this.VCPan = VC;
+		}else{
+			this.VCTilt = VC;
+		}
+
+		singleTbothF = true;
+		this.panTtiltF = panTtiltF;
+
+		panHistory = new TreeMap<Long,Double>();
 
 		addHistoryTrhad = new VisionAddHistoryTrhad();
 		startAddToHistoryTrhad();
+
+		data = new VisionData(0, 0);
+	}
+
+	public VisionMaster(VisionControllerInterface VCPan, VisionControllerInterface VCTilt, int maxDecoderHestorySize,
+			double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
+
+		this.maxDecoderHestorySize= maxDecoderHestorySize;
+		this.pixelToAngle = cameraAngle / cameraWidth; 
+		this.senterInPixel = cameraWidth / 2;
+		this.NTValueName = NTValueName;
+		this.offSeat = offSeat;
+		this.VCPan = VCPan;
+		this.VCTilt = VCTilt;
+
+		singleTbothF = false;
+
+		panHistory = new TreeMap<Long,Double>();
+		tiltHistory = new TreeMap<Long,Double>();
+
+		addHistoryTrhad = new VisionAddHistoryTrhad();
+		startAddToHistoryTrhad();
+
+		data = new VisionData(0, 0);
 	}
 
 	//Don't change if you don't need to!!!
 	public void addPanAndTiltPositionToHistory() {
-		//Add encoder position and time to history
+		
+		if(singleTbothF){
+			
+			if(panTtiltF){
+				//Add position and time to history
+				panHistory.put(Calendar.getInstance().getTimeInMillis(), VCPan.getSource());
 
-		panHistory.put(Calendar.getInstance().getTimeInMillis(), VC.getPanSource());
-		tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VC.getTiltSource());
+				// remove the lowest key so he don't grow forever...
+				if(panHistory.size() > this.maxDecoderHestorySize) {
+					panHistory.remove(panHistory.firstKey());	
+				}
+				
+			}else{
+				//Add position and time to history
+				tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VCTilt.getSource());
 
-		// remove the lowest key so he don't grow forever...
-		if(panHistory.size() > this.maxDecoderHestorySize) {
-			panHistory.remove(panHistory.firstKey());	
-		}else if(tiltHistory.size() > this.maxDecoderHestorySize){
-			tiltHistory.remove(tiltHistory.firstKey());
+				// remove the lowest key so he don't grow forever...
+				if(tiltHistory.size() > this.maxDecoderHestorySize) {
+					tiltHistory.remove(tiltHistory.firstKey());	
+				}
+			}
+			
+		}else{
+			
+			//Add position and time to history
+			panHistory.put(Calendar.getInstance().getTimeInMillis(), VCPan.getSource());
+			tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VCTilt.getSource());
+			
+			// remove the lowest key so he don't grow forever...
+			if(panHistory.size() > this.maxDecoderHestorySize) {
+				panHistory.remove(panHistory.firstKey());	
+			}
+			
+			// remove the lowest key so he don't grow forever...
+			if(tiltHistory.size() > this.maxDecoderHestorySize) {
+				tiltHistory.remove(tiltHistory.firstKey());	
+			}
 		}
-
 	}
 
 	//Don't change if you don't need to!!!
@@ -104,23 +167,8 @@ public class VisionMaster{
 			if(Long.parseLong(TargetInfo[2]) > lastTime){//if the frame take after the last time
 
 				lastTime = Double.parseDouble(TargetInfo[2]);//change the last time 
-
-				data = new VisionData(
-
-						(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
-
-								- 	//need to check it it cold be - or +
-
-								((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
-
-						+
-
-						offSeat, //offSeat from target if camera is not in the center
-
-						Double.parseDouble(TargetInfo[1])); //target Height in pixel
-
-
-
+				
+				setVisionData(TargetInfo);
 			}
 		}
 		//return new VisionData(0, 0); //there is problem with the data from the vision
@@ -132,20 +180,69 @@ public class VisionMaster{
 		new Thread(addHistoryTrhad).start();
 	}	
 
-	/*protected double TargetHightMath(double targetHigth) {
+	protected void setVisionData(String [] TargetInfo){
+		
+		if(singleTbothF){
+			if(panTtiltF){
+				this.data.setAngleToTarget(
+
+						(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
+
+						- 	//need to check it it cold be - or +
+
+						((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
+
+						+
+
+						offSeat); //offSeat from target if camera is not in the center
+
+				this.data.setPixelHeightToTarget(Double.parseDouble(TargetInfo[1])); //target Height in pixel
+
+			}else{
+				this.data.setAngleToTarget(Double.parseDouble(TargetInfo[0])); //offSeat from target if camera is not in the center
+
+				this.data.setPixelHeightToTarget(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
+													getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
+				
+			}
+
+		} else {
+
+			this.data.setAngleToTarget(
+
+					(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
+
+					- 	//need to check it it cold be - or +
+
+					((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
+
+					+
+
+					offSeat); //offSeat from target if camera is not in the center
+
+			this.data.setPixelHeightToTarget(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
+					getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
+			
+		}
+	}
+}
+
+
+
+/*protected double TargetHightMath(double targetHigth) {
 		if(chose.equals("RPM")) {
 			return VC.TargetHightToRPM(targetHigth);
-			
+
 		}else if (chose.equals("Distance")) {
 			return VC.TargetHightToDistance(targetHigth);
-			
+
 		}else if (chose.equals("Angle")) {
 			return VC.TargetHightToAngle(targetHigth);
 		}else {
 			return 0;
 		}
-	}*/
-}
+}*/
+
 
 
 

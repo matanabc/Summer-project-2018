@@ -5,33 +5,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public interface VisionControllerInterface{
 	
-	public Subsystem getPanSubsystem();
+	/**
+	 * ...
+	 * This method is similar to {@link #getSubsystem()}, with the following differences:
+	 * ...
+	 */
 	
-	public Subsystem getTiltSubsystem();
+	public Subsystem getSubsystem();
 	
-	public PID_Gains getPanGains();
+	public PID_Gains getGains();
 	
-	public PID_Gains getTiltGains();
+	public double getSource();
 
-	public double getPanSource();
-
-	public double getTiltSource();
-
-	public void setPanOutput(double output);
-
-	public void setTiltOutput(double output);
+	public void setOutput(double output);
 	
-	public double panMaxOutput();
-	
-	public double tiltMaxOutput();
-	
-	public double panMaxerror();
+	public double getMaxOutput();
 
-	public double tiltMaxerror();
+	public double getMaxerror();
 	
-	public double TargetHightToDistance(double targetHight);
+	public double castYpixel(double yPixel, double sourcePosition);
+	
+	/*public double TargetHightToDistance(double targetHight);
 	
 	public double TargetHightToRPM(double targetHight);
 	
-	public double TargetHightToAngle(double targetHight);
+	public double TargetHightToAngle(double targetHight);*/
 }

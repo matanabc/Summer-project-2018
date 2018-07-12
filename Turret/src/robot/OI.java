@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.Shooter.ResetTalonsEncodersCommand;
 import robot.commands.Shooter.ShooterCommand;
-import vision.VisionCommands.VisionPanAndTiltPWMSequentialCommand;
-import vision.VisionCommands.VisionPanPWMCommand;
-import vision.VisionControllers.VisionController;
+import vision.VisionControllers.PanVisionController;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -25,7 +23,7 @@ public class OI {
 
 	public Button[] AdelBtns = new Button[12];
 	
-	public VisionController VC = new VisionController();
+	public PanVisionController VC = new PanVisionController();
 
 	public OI(){
 		for (int i = 0; i < 12; i ++){
@@ -43,6 +41,6 @@ public class OI {
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 		//AdelBtns[2].whileHeld(new ShooterCommand(0.25));//Right
 		
-		AdelBtns[2].whileHeld(new VisionPanAndTiltPWMSequentialCommand(Robot.VM, VC, 0.4, 1));
+		//AdelBtns[2].whileHeld(new VisionPanAndTiltPWMSequentialCommand(Robot.VM, VC, 0.4, 1));
 	}
 }

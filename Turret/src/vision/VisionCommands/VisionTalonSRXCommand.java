@@ -3,22 +3,22 @@ package vision.VisionCommands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import vision.VisionClass.VisionMaster;
-import vision.VisionControllers.VisionController;
+import vision.VisionControllers.PanVisionController;
 
 /**
  *
  */
-public class VisionPanTalonSRXCommand extends Command {
+public class VisionTalonSRXCommand extends Command {
 
-	private VisionController VC;
+	private PanVisionController VC;
 	private VisionMaster VM;
 
-    public VisionPanTalonSRXCommand(VisionMaster VM, VisionController VC) {
+    public VisionTalonSRXCommand(VisionMaster VM, PanVisionController VC) {
     	
     	this.VC = VC;
     	this.VM = VM;
     	
-    	requires(VC.getPanSubsystem());
+    	requires(VC.getSubsystem());
     }
 
     // Called just before this Command runs the first time
@@ -27,8 +27,8 @@ public class VisionPanTalonSRXCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	VC.setPanOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
-    	SmartDashboard.putNumber(VC.getPanSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+    	VC.setOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+    	SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
 
     }
 

@@ -5,31 +5,28 @@ import MotionProfiling.PID_Classes.PID_Variables;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import vision.VisionClass.VisionMaster;
-import vision.VisionControllers.VisionController;
+import vision.VisionControllers.PanVisionController;
 
 /**
  *
  */
-public class VisionTiltPWMCommand extends Command {
-	
-	private VisionController VC;
+public class VisionPWMCommand extends Command {
+
+	private PanVisionController VC;
 	private PID_Gains gains_;
 	private PID_Variables pidV_;
 	private VisionMaster VM;
-	private String chose;
 
-	public VisionTiltPWMCommand(VisionMaster VM, VisionController VC, String chose) {
-		
+	public VisionPWMCommand(VisionMaster VM, PanVisionController VC) {
+
 		this.VC = VC;
-		this.gains_ = VC.getTiltGains();
+		this.gains_ = VC.getGains();
 		this.VM = VM;
-		this.chose = chose;
-		
 		pidV_ = new PID_Variables();
-		pidV_.maxOutput = VC.tiltMaxOutput();
-		pidV_.maxErr = VC.tiltMaxerror();
-		
-		requires(VC.getTiltSubsystem());
+		pidV_.maxOutput = VC.getMaxOutput();
+		pidV_.maxErr = VC.getMaxerror();
+
+		requires(VC.getSubsystem());
 	}
 
 	// Called just before this Command runs the first time
@@ -39,12 +36,15 @@ public class VisionTiltPWMCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		pidV_.pos = VC.getTiltSource();
 
-		pidV_.error = VM != null ? targetHightMath(VM.getAngleAndDistanceToTarget().getPixelHeightToTarget()) - pidV_.pos : 0;	
+		//pidV_.pos = system_ != null ? system_.getPosition() : 0; 
+		pidV_.pos = VC.getSource();
+
+		pidV_.error = VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() - pidV_.pos : 0;	
 		pidV_.output =	pidV_.error * gains_.kp + pidV_.errorSum * gains_.ki + (pidV_.error - pidV_.lastError) * gains_.kd;	
 
-		SmartDashboard.putNumber(VC.getTiltSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getPixelHeightToTarget() : 0);
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid pos : ", pidV_.pos);
 		
 		SmartDashboard.putBoolean("VM is Null", VM == null);
 
@@ -61,11 +61,10 @@ public class VisionTiltPWMCommand extends Command {
 
 		}
 
-		VC.setTiltOutput(pidV_.output);
+		VC.setOutput(pidV_.output);
 
-		SmartDashboard.putNumber(VC.getTiltSubsystem().toString() + " pid Error: = ", pidV_.error);
-		SmartDashboard.putNumber(VC.getTiltSubsystem().toString() + " pid Output: = ", pidV_.output);
-
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid Error: = ", pidV_.error);
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid Output: = ", pidV_.output);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -75,26 +74,12 @@ public class VisionTiltPWMCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		VC.setTiltOutput(0);
+		VC.setOutput(0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		end();
-	}
-	
-	protected double targetHightMath(double targetHight) {
-		if(chose.equals("RPM")) {
-			return VC.TargetHightToRPM(targetHight);
-			
-		}else if (chose.equals("Distance")) {
-			return VC.TargetHightToDistance(targetHight);
-			
-		}else if (chose.equals("Angle")) {
-			return VC.TargetHightToAngle(targetHight);
-		}else {
-			return 0;
-		}
 	}
 }

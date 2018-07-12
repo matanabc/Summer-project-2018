@@ -17,4 +17,12 @@ public class VisionData {
 	public double getPixelHeightToTarget() {
 		return this.pixelHeightToTarget;
 	}
+	
+	public void setAngleToTarget(double angleToTarget){
+		this.angleToTarget = angleToTarget;
+	}
+	
+	public void setPixelHeightToTarget(double pixelHeightToTarget){
+		this.pixelHeightToTarget = pixelHeightToTarget;
+	}
 }
