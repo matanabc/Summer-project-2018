@@ -1,16 +1,10 @@
 package robot.subsystems.Turret;
 
-import java.util.Calendar;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.RobotMap;
-import robot.commands.TurretCommands.AddEncoderPositionToHestoryCommand;
 
 /**
  *

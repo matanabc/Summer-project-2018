@@ -1,14 +1,19 @@
 package robot.subsystems.Turret;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import robot.RobotMap;
 
 /**
  *
  */
 public class TurretTiltSystem extends Subsystem {
-
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	
+	private Servo tiltServo = new Servo(RobotMap.TILT_SERVO_PWM);
+	
+	public TurretTiltSystem(){
+		setpointPosition(RobotMap.SERVO_MIN_ANGLE);
+	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -16,7 +21,13 @@ public class TurretTiltSystem extends Subsystem {
     }
     
     public void setpointPosition(double position) {
-    	
+    	if(position > RobotMap.SERVO_MAX_ANGLE){
+    		tiltServo.setAngle(RobotMap.SERVO_MAX_ANGLE);
+    	}else if(position < RobotMap.SERVO_MIN_ANGLE){
+    		tiltServo.setAngle(RobotMap.SERVO_MIN_ANGLE);
+    	}else{
+    		tiltServo.setAngle(position);
+    	}
     }
 }
 

@@ -18,7 +18,7 @@ public class RobotMap {
 	//Joystick
 	public static final int ADEL_JOYSTICK_CHANEL = 0;
 
-	//shooter
+	//can
 	public static final int MASTER_SHOOTER_MOTOR_CAN = 0;
 	public static final int SLAVE_SHOOTER_MOTOR_CAN = 1;
 	public static final int SIDE_MOTOR_CAN = 2;
@@ -26,6 +26,7 @@ public class RobotMap {
 	//pwm
 	public static final int DRIVE_RIGHT_PWM = 0;
 	public static final int DRIVE_LEFT_PWM = 1;
+	public static final int TILT_SERVO_PWM = 2;
 
 	//drive
 	public static final double DRIVE_SLOW = 0.5;
@@ -39,6 +40,9 @@ public class RobotMap {
 	public static final double KP_SPEEN_SPEED = 0.2;
 	public static final double PULLS_PER_TIC = 4125;
 	public static final double ENCODER_POSITION_ANGLE = 0.03773584905660377358490566037736;
+	
+	public static final int SERVO_MIN_ANGLE = 0;
+	public static final int SERVO_MAX_ANGLE = 50;
 
 	//vision
 	public static final int MAX_DECODER_HOSTORY_SIZE = 1000;
