@@ -1,15 +1,14 @@
-package robot.commands.CommandWrite;
+package robot.commands.drive;
 
-import java.util.LinkedList;
-
+import LogFile.CommandWrite;
 import robot.Robot;
 
-public class TestCommand extends CommandWrite {
+public class DriveWithJoystickCommanWrite extends CommandWrite {
 
 	private double speed_, turn_;
 	
-	public TestCommand() {
-		super("Test Command", new LinkedList<String>());
+	public DriveWithJoystickCommanWrite() {
+		super("Drive with joystick command", Robot.logFile);
 		
 		requires(Robot.driveSystem);
 	}
@@ -22,7 +21,7 @@ public class TestCommand extends CommandWrite {
 	@Override
 	protected void executeWrite() {
 		speed_ = Robot.oi.AdelStick.getRawAxis(1);
-		turn_ = Robot.oi.AdelStick.getRawAxis(4);//4	-
+		turn_ = Robot.oi.AdelStick.getRawAxis(3) - Robot.oi.AdelStick.getRawAxis(2);
 	
 		Robot.driveSystem.arcade(-speed_, turn_);	
 		

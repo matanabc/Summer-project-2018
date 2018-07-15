@@ -1,4 +1,4 @@
-package robot.commands.CommandWrite;
+package LogFile;
 
 import java.util.LinkedList;
 
@@ -17,58 +17,36 @@ public abstract class CommandWrite extends Command {
 	}
 
 	protected abstract void initializeWrite();
-	
-	protected String whenInitializeWrite(){
-		return "";
-	}
 
 	protected void initialize() {   	
-		//write.add(commandName + " is initialize");
+		write.add(commandName + " is initialize");
 
 		this.isExecute = false;
-		System.out.println(commandName + " is initialize, " + whenInitializeWrite());
-
-		initializeWrite();
 	}
 
 	protected abstract void executeWrite();
-	
-	protected String whenExecuteWrite(){
-		return "";
-	}
 
 	protected void execute() {
-		//write.add(commandName + " is execute");
 		if(!this.isExecute){	
-			System.out.println(commandName + " is execute, " + whenExecuteWrite());
+			write.add(commandName + " is execute");
 			this.isExecute = true;
 		}
-		
-		executeWrite();
 	}
 
 	protected abstract boolean isFinished();
 
 	protected abstract void endWrite();
-	
-	protected String whenEndWrite(){
-		return "";
-	}
 
 	protected void end() {
-		//write.add(commandName + " is end");
+		write.add(commandName + " is end");
 		this.isExecute = false;
-		
-		System.out.println(commandName + " is end, " + whenEndWrite());
 
 		endWrite();
 	}
 
 	protected void interrupted() {
-		//write.add(commandName + " is interrupted");
+		write.add(commandName + " is interrupted");
 		this.isExecute = false;
-		
-		System.out.println(commandName + " is interrupted");
 
 		endWrite();
 	}

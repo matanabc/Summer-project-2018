@@ -54,4 +54,7 @@ public class RobotMap {
 	public static final double PAN_MAX_ERROR = 1;
 	public static final double TILT_MAX_OUTPUT = 0.4;
 	public static final double TILT_MAX_ERROR = 1;
+	
+	//write command
+	public static final String FILE_PLACE = "";
 }

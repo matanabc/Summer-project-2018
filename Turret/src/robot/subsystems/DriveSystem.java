@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
-import robot.commands.CommandWrite.TestCommand;
+import robot.commands.drive.DriveWithJoystickCommanWrite;
 
 
 public class DriveSystem extends Subsystem{
@@ -40,7 +40,7 @@ public class DriveSystem extends Subsystem{
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		setDefaultCommand(new TestCommand());
+		setDefaultCommand(new DriveWithJoystickCommanWrite());
 	}
 
 	public void arcade(double speed, double turn){
