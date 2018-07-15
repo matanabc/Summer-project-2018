@@ -42,7 +42,7 @@ public class TurretShooterSystem extends Subsystem {
 	public void resetTalonsEncoders(){
 
 		masterShootMotor_.setSelectedSensorPosition(0, 0, 0);
-		sideEncoder_.setSelectedSensorPosition(0, 0, 0);
+		//sideEncoder_.setSelectedSensorPosition(0, 0, 0);
 
 		/*masterShootMotor_.set(com.ctre.phoenix.motorcontrol.ControlMode.Velocity, 0);
     	masterShootMotor_.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Coast);

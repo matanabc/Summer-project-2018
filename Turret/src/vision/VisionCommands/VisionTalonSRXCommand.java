@@ -2,48 +2,71 @@ package vision.VisionCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import vision.VisionClass.VisionControllerInterface;
 import vision.VisionClass.VisionMaster;
-import vision.VisionControllers.VisionControllerInterface;
 
-/**
- *
- */
+
 public class VisionTalonSRXCommand extends Command {
 
 	private VisionControllerInterface VC;
 	private VisionMaster VM;
+	private boolean panTtiltF;
 
-    public VisionTalonSRXCommand(VisionMaster VM, VisionControllerInterface VC) {
-    	
-    	this.VC = VC;
-    	this.VM = VM;
-    	
-    	requires(VC.getSubsystem());
-    }
+	
+	/**
+	 *@param 
+	 * VM	-		this need to be vision controller you use for pan or tilt.
+	 * 
+	 * @param 
+	 * VC	-		this need to be object of VisionControllerInterface.
+	 * 
+	 * @param
+	 * panTtiltF	-		this need to be true or false, true if you want it to pan and false if you want it to tilt. 
+	 */
+	public VisionTalonSRXCommand(VisionMaster VM, VisionControllerInterface VC, boolean panTtiltF) {
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+		this.VC = VC;
+		this.VM = VM;
+		this.panTtiltF = panTtiltF;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	VC.setOutput(VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
-    	SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getAngleAndDistanceToTarget().getAngleToTarget() : 0);
+		requires(VC.getSubsystem());
+	}
 
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		if(panTtiltF) {
+			pan();
+		}else {
+			tilt();
+		}
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
+	}
+
+	protected void pan() {
+		VC.setOutput(VM != null ? VM.getTargetPosition().getTargetAngle() : 0);
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getTargetPosition().getTargetAngle() : 0);
+	}
+
+	protected void tilt() {
+		VC.setOutput(VM != null ? VM.getTargetPosition().getTargetHeight() : 0);
+		SmartDashboard.putNumber(VC.getSubsystem().toString() + " pid setpoint : " , VM != null ? VM.getTargetPosition().getTargetHeight() : 0);
+	}
 }

@@ -1,4 +1,4 @@
-package vision.VisionControllers;
+package vision.VisionClass;
 
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;

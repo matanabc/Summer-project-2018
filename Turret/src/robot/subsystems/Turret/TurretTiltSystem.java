@@ -29,5 +29,9 @@ public class TurretTiltSystem extends Subsystem {
     		tiltServo.setAngle(position);
     	}
     }
+    
+    public double getServoPosition() {
+    	return tiltServo.getAngle();
+    }
 }
 

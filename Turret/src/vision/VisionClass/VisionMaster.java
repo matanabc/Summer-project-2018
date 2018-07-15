@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import vision.VisionControllers.VisionControllerInterface;
 
 public class VisionMaster{
 
@@ -16,7 +15,7 @@ public class VisionMaster{
 	private double lastTime;
 	protected VisionAddHistoryTrhad addHistoryTrhad;
 	private VisionData data;
-	private double offSeat;
+	private double offSet;
 	private VisionControllerInterface VCTilt;
 	private VisionControllerInterface VCPan;
 	private boolean singleTbothF;
@@ -28,15 +27,37 @@ public class VisionMaster{
 	private TreeMap<Long,Double> panHistory;
 	private TreeMap<Long,Double> tiltHistory;
 
-
+	
+	/**
+	 * @param 
+	 * VC	-		this need to be vision controller you use for pan or tilt.
+	 * 
+	 * @param 
+	 * maxDecoderHestorySize	-		this need to be max of history.
+	 * 
+	 * @param
+	 * cameraAngle	-		this need to be the camera angle you use for vision. 
+	 *
+	 * @param 
+	 * cameraWidth	-		this need to be the camera Width of pixel you use for vision.
+	 * 
+	 * @param 
+	 * NTValueName	-		this need to be the name of the NetworkTable of the data from the vision.
+	 * 
+	 * @param
+	 * offSet	-		this need to be the offset of the camera for the center. 
+	 * 
+	 * @param 
+	 * panTtiltF	-		this need to true or false, true if you use vision controller for pan false if you use vision controller for tilt.
+	 */
 	public VisionMaster(VisionControllerInterface VC, int maxDecoderHestorySize, double cameraAngle, 
-			double cameraWidth, String NTValueName, double offSeat, boolean panTtiltF) {
+			double cameraWidth, String NTValueName, double offSet, boolean panTtiltF) {
 
 		this.maxDecoderHestorySize= maxDecoderHestorySize;
 		this.pixelToAngle = cameraAngle / cameraWidth; 
 		this.senterInPixel = cameraWidth / 2;
 		this.NTValueName = NTValueName;
-		this.offSeat = offSeat;
+		this.offSet = offSet;
 		
 		if(panTtiltF){
 			this.VCPan = VC;
@@ -55,6 +76,29 @@ public class VisionMaster{
 		data = new VisionData(0, 0);
 	}
 
+	
+	/**
+	 * @param 
+	 * VCPan	-		this need to be vision controller you use for pan.
+	 * 
+	 * @param 
+	 * VCTilt	-		this need to be vision controller you use for tilt.
+	 * 
+	 * @param 
+	 * maxDecoderHestorySize	-		this need to be max of history.
+	 * 
+	 * @param
+	 * cameraAngle	-		this need to be the camera angle you use for vision. 
+	 *
+	 * @param 
+	 * cameraWidth	-		this need to be the camera Width of pixel you use for vision.
+	 * 
+	 * @param 
+	 * NTValueName	-		this need to be the name of the NetworkTable of the data from the vision.
+	 * 
+	 * @param
+	 * offSet	-		this need to be the offset of the camera for the center. 
+	 */
 	public VisionMaster(VisionControllerInterface VCPan, VisionControllerInterface VCTilt, int maxDecoderHestorySize,
 			double cameraAngle, double cameraWidth, String NTValueName, double offSeat) {
 
@@ -62,7 +106,7 @@ public class VisionMaster{
 		this.pixelToAngle = cameraAngle / cameraWidth; 
 		this.senterInPixel = cameraWidth / 2;
 		this.NTValueName = NTValueName;
-		this.offSeat = offSeat;
+		this.offSet = offSeat;
 		this.VCPan = VCPan;
 		this.VCTilt = VCTilt;
 
@@ -153,14 +197,20 @@ public class VisionMaster{
 	}
 
 	//Don't change if you don't need to!!!
-	public VisionData getAngleAndDistanceToTarget() {
+	
+	/**
+	 * @return
+	 * it will return you object of the data from the vision, 
+	 * getTargetAngle() will give you the angle of the target, getTargetHeight() will give you the height of the target
+	 */
+	public VisionData getTargetPosition() {
 
 		String [] TargetInfo = SmartDashboard.getString(this.NTValueName, "0;").split(";");
 
 		/*
 		 *	TargetInfo[0] - get the x pixel from the frame
 		 *	TargetInfo[1] - get the x pixel from the frame
-		 *	TargetInfo[2] - get the time when the fram was taking
+		 *	TargetInfo[2] - get the time when the frame was taking
 		 */
 
 		if(TargetInfo.length == 3){//if the data is came;
@@ -184,7 +234,7 @@ public class VisionMaster{
 		
 		if(singleTbothF){
 			if(panTtiltF){
-				this.data.setAngleToTarget(
+				this.data.setTargetAngle(
 
 						(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
 
@@ -194,21 +244,21 @@ public class VisionMaster{
 
 						+
 
-						offSeat); //offSeat from target if camera is not in the center
+						offSet); //offSeat from target if camera is not in the center
 
-				this.data.setPixelHeightToTarget(Double.parseDouble(TargetInfo[1])); //target Height in pixel
+				this.data.setTargetHeight(Double.parseDouble(TargetInfo[1])); //target Height in pixel
 
 			}else{
-				this.data.setAngleToTarget(Double.parseDouble(TargetInfo[0])); //offSeat from target if camera is not in the center
+				this.data.setTargetAngle(Double.parseDouble(TargetInfo[0])); //offSeat from target if camera is not in the center
 
-				this.data.setPixelHeightToTarget(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
+				this.data.setTargetHeight(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
 													getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
 				
 			}
 
 		} else {
 
-			this.data.setAngleToTarget(
+			this.data.setTargetAngle(
 
 					(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
 
@@ -218,31 +268,11 @@ public class VisionMaster{
 
 					+
 
-					offSeat); //offSeat from target if camera is not in the center
+					offSet); //offSeat from target if camera is not in the center
 
-			this.data.setPixelHeightToTarget(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
+			this.data.setTargetHeight(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
 					getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
 			
 		}
 	}
 }
-
-
-
-/*protected double TargetHightMath(double targetHigth) {
-		if(chose.equals("RPM")) {
-			return VC.TargetHightToRPM(targetHigth);
-
-		}else if (chose.equals("Distance")) {
-			return VC.TargetHightToDistance(targetHigth);
-
-		}else if (chose.equals("Angle")) {
-			return VC.TargetHightToAngle(targetHigth);
-		}else {
-			return 0;
-		}
-}*/
-
-
-
-

@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 		//logFile = new LinkedList<>();
 		//logFile.add("Robot is on");
 
-		shooterSystem = new TurretShooterSystem();
+		turretShooterSystem = new TurretShooterSystem();
 		driveSystem = new DriveSystem();
 		turretPanSystem = new TurretPanSystem();
 		turretTiltSystem = new TurretTiltSystem();
@@ -136,8 +136,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		shooterSystem.resetTalon();
-		shooterSystem.setSideMotorSetPoint(0);
+		//shooterSystem.resetTalon();
+		//shooterSystem.setSideMotorSetPoint(0);
 	}
 
 	/**
@@ -157,15 +157,18 @@ public class Robot extends TimedRobot {
 	}
 
 	public void print(){
-		SmartDashboard.putNumber("shooter velocity:", shooterSystem.getShooterVelocity());
-		SmartDashboard.putNumber("side position:", shooterSystem.getSideEncoderPosition());
+		//Turret prints
+		SmartDashboard.putNumber("Shooter velocity:", turretShooterSystem.getShooterVelocity());
+		SmartDashboard.putNumber("Turret position:", turretPanSystem.getSideEncoderPosition());
+		SmartDashboard.putNumber("Servo position:", turretPanSystem.getSideEncoderPosition());
 
+		//Drive prints
 		SmartDashboard.putNumber("Navx angle", driveSystem.getAngleNavx());
 
-		SmartDashboard.putNumber("Error To Target", Math.abs(Robot.VM.getAngleAndDistanceToTarget().getAngleToTarget()) 
-				- Math.abs(Robot.driveSystem.getAngleNavx()));
-
-		SmartDashboard.putNumber("Target Angle", Robot.VM.getAngleAndDistanceToTarget().getAngleToTarget());
-
+		//Vision prints
+		SmartDashboard.putNumber("Angle To Target", Math.abs(VM.getTargetPosition().getTargetAngle())
+				- Math.abs(oi.VC.getSource()));
+		SmartDashboard.putNumber("Target Angle", VM.getTargetPosition().getTargetAngle());
+		SmartDashboard.putNumber("Target Height", VM.getTargetPosition().getTargetHeight());
 	}
 }

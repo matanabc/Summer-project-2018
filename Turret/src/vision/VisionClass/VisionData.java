@@ -10,19 +10,19 @@ public class VisionData {
 		this.pixelHeightToTarget = pixelHeightToTarget;
 	}
 	
-	public double getAngleToTarget() {
+	public double getTargetAngle() {
 		return this.angleToTarget;
 	}
 	
-	public double getPixelHeightToTarget() {
+	public double getTargetHeight() {
 		return this.pixelHeightToTarget;
 	}
 	
-	public void setAngleToTarget(double angleToTarget){
+	public void setTargetAngle(double angleToTarget){
 		this.angleToTarget = angleToTarget;
 	}
 	
-	public void setPixelHeightToTarget(double pixelHeightToTarget){
+	public void setTargetHeight(double pixelHeightToTarget){
 		this.pixelHeightToTarget = pixelHeightToTarget;
 	}
 }

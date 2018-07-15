@@ -4,13 +4,13 @@ import com.kauailabs.navx.frc.AHRS;
 
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
+import robot.commands.CommandWrite.TestCommand;
 
 
 public class DriveSystem extends Subsystem{
@@ -18,8 +18,8 @@ public class DriveSystem extends Subsystem{
 	private VictorSP leftMotor_ = new VictorSP(RobotMap.DRIVE_LEFT_PWM);
 	private VictorSP rightMotor_ = new VictorSP(RobotMap.DRIVE_RIGHT_PWM);
 	
-	private PIDController leftMotorsPID;
-	private PIDController rightMotorsPID;
+	//private PIDController leftMotorsPID;
+	//private PIDController rightMotorsPID;
 
 	private DifferentialDrive driveSystem_ = new DifferentialDrive(leftMotor_, rightMotor_);
 	
@@ -30,13 +30,11 @@ public class DriveSystem extends Subsystem{
 	public DriveSystem() {
 		CreatNavX();
 		
-		this.leftMotorsPID = new PIDController(0.1, 0, 0, navX, this.leftMotor_);
+		/*this.leftMotorsPID = new PIDController(0.1, 0, 0, navX, this.leftMotor_);
 		this.rightMotorsPID = new PIDController(0.1, 0, 0, navX, this.rightMotor_);
 		this.leftMotorsPID.setOutputRange(-0.3, 0.3);
 		this.rightMotorsPID.setOutputRange(-0.3, 0.3);
-		disablePIDTurn();
-		
-		
+		disablePIDTurn();*/
 	}
 
 	@Override
@@ -48,34 +46,19 @@ public class DriveSystem extends Subsystem{
 	public void arcade(double speed, double turn){
 		driveSystem_.arcadeDrive(speed, turn);
 		
-		SmartDashboard.putNumber("Right Output: !!!!!!!!!", rightMotor_.get());
-		SmartDashboard.putNumber("Left Output: !!!!!!!!!", leftMotor_.get());
+		putMotorsOutputInNT();
 	}
 
 	public void tank(double left, double right){
 		rightMotor_.set(-right);
 		leftMotor_.set(left);
 		
-		SmartDashboard.putNumber("Right Output: !!!!!!!!!", -right);
-		SmartDashboard.putNumber("Left Output: !!!!!!!!!", left);
+		putMotorsOutputInNT();
 	}
 	
-	public void enablePIDTurn() {
-		leftMotorsPID.reset();
-		rightMotorsPID.reset();
-		
-		leftMotorsPID.enable();
-		rightMotorsPID.enable();
-	}
-	
-	public void disablePIDTurn() {
-		leftMotorsPID.disable();
-		rightMotorsPID.disable();
-	}
-	
-	public void setSetpointPIDTurn(double setpoint) {
-		leftMotorsPID.setSetpoint(setpoint);
-		rightMotorsPID.setSetpoint(setpoint);
+	public void putMotorsOutputInNT() {
+		SmartDashboard.putNumber("Right Motors Output: ", rightMotor_.get());
+		SmartDashboard.putNumber("Left Motors Output: ", leftMotor_.get());
 	}
 	
 	public PID_Gains getVisoinPanPIDGains(){
@@ -102,11 +85,29 @@ public class DriveSystem extends Subsystem{
 		} catch (RuntimeException ex ) {
 			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 			SmartDashboard.putBoolean("NavX on:", false);
-			//CreatNavX(); try to re-connect
+			CreatNavX(); //try to re-connect
 		}		
 	}
 	
 	public float getAngleNavx(){
 		return navX.getYaw();
 	}
+	
+	/*public void enablePIDTurn() {
+		leftMotorsPID.reset();
+		rightMotorsPID.reset();
+		
+		leftMotorsPID.enable();
+		rightMotorsPID.enable();
+	}
+	
+	public void disablePIDTurn() {
+		leftMotorsPID.disable();
+		rightMotorsPID.disable();
+	}
+	
+	public void setSetpointPIDTurn(double setpoint) {
+		leftMotorsPID.setSetpoint(setpoint);
+		rightMotorsPID.setSetpoint(setpoint);
+	}*/
 }
