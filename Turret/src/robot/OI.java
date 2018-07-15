@@ -10,9 +10,12 @@ package robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import robot.commands.Shooter.ResetTalonsEncodersCommand;
-import robot.commands.Shooter.ShooterCommand;
+import robot.commands.TurretCommands.PanTiltAndShootCommand;
+import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
+import robot.commands.drive.DriveSpeed;
 import vision.VisionControllers.PanVisionController;
+import vision.VisionControllers.TurretPanVisionController;
+import vision.VisionControllers.TurretTiltVisionController;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,6 +27,9 @@ public class OI {
 	public Button[] AdelBtns = new Button[12];
 	
 	public PanVisionController VC = new PanVisionController();
+	
+	public TurretPanVisionController TPVC = new TurretPanVisionController();
+	public TurretTiltVisionController TTVC = new TurretTiltVisionController();
 
 	public OI(){
 		for (int i = 0; i < 12; i ++){
@@ -34,13 +40,11 @@ public class OI {
 	public void loadOIs(){		
 
 		//Adel turn slow speed 
-		//AdelBtns[5].whileHeld(new DriveSpeed(-RobotMap.DRIVE_SLOW, RobotMap.DRIVE_SLOW));//Turn right
-		//AdelBtns[4].whileHeld(new DriveSpeed(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
+		AdelBtns[5].whileHeld(new DriveSpeed(-RobotMap.DRIVE_SLOW, RobotMap.DRIVE_SLOW));//Turn right
+		AdelBtns[4].whileHeld(new DriveSpeed(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
 		
-		AdelBtns[0].whileHeld(new ShooterCommand(0));
+		AdelBtns[0].whileHeld(new PanTiltAndShootCommand(Robot.VM, TPVC, TTVC, 1));
+		
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
-		//AdelBtns[2].whileHeld(new ShooterCommand(0.25));//Right
-		
-		//AdelBtns[2].whileHeld(new VisionPanAndTiltPWMSequentialCommand(Robot.VM, VC, 0.4, 1));
 	}
 }

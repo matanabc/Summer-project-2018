@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
-import robot.commands.TestCommand;
+import robot.commands.CommandWrite.TestCommand;
 import robot.commands.drive.DriveWithJoysticks;
 
 
@@ -81,10 +81,6 @@ public class DriveSystem extends Subsystem{
 	}
 	
 	public PID_Gains getVisoinPanPIDGains(){
-		return visionGains;
-	}
-	
-	public PID_Gains getVisoinTiltPIDGains(){
 		return visionGains;
 	}
 	

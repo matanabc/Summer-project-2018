@@ -5,36 +5,36 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.Robot;
 import robot.RobotMap;
 
-public class TiltVisionController implements VisionControllerInterface{
+public class TurretTiltVisionController implements VisionControllerInterface{
 
 	@Override
 	public double getSource() {
 		// Need to return Source for PID
-		return Robot.driveSystem.getAngleNavx();
+		return 0;
 	}
 
 	@Override
 	public Subsystem getSubsystem() {
 		// Need to return the subsystem who will do the tilt
-		return null;
+		return Robot.turretTiltSystem;
 	}
 
 	@Override
 	public void setOutput(double output) {
 		// Need to put the output value for motors
-		Robot.driveSystem.tank(output, -output);
+		Robot.turretTiltSystem.setpointPosition(castYpixel(output, 0));
 	}
 
 	@Override
 	public PID_Gains getGains() {
 		// Need to return PID Gains for tilt system
-		return Robot.driveSystem.getVisoinTiltPIDGains();
+		return null;
 	}
 
 	@Override
 	public double getMaxOutput() {
 		// Need to return pan max output
-		return RobotMap.PAN_MAX_OUTPUT;
+		return RobotMap.TILT_MAX_OUTPUT;
 	}
 
 	@Override

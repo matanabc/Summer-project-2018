@@ -1,4 +1,4 @@
-package robot.commands;
+package robot.commands.CommandWrite;
 
 import java.util.LinkedList;
 

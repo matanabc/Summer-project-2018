@@ -3,17 +3,17 @@ package vision.VisionCommands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import vision.VisionClass.VisionMaster;
-import vision.VisionControllers.PanVisionController;
+import vision.VisionControllers.VisionControllerInterface;
 
 /**
  *
  */
 public class VisionTalonSRXCommand extends Command {
 
-	private PanVisionController VC;
+	private VisionControllerInterface VC;
 	private VisionMaster VM;
 
-    public VisionTalonSRXCommand(VisionMaster VM, PanVisionController VC) {
+    public VisionTalonSRXCommand(VisionMaster VM, VisionControllerInterface VC) {
     	
     	this.VC = VC;
     	this.VM = VM;

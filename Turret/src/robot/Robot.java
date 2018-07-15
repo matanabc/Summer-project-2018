@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
-import robot.subsystems.ShooterSystem;
+import robot.subsystems.Turret.TurretPanSystem;
+import robot.subsystems.Turret.TurretShooterSystem;
+import robot.subsystems.Turret.TurretTiltSystem;
 import vision.VisionClass.VisionMaster;
 
 /**
@@ -25,8 +27,12 @@ import vision.VisionClass.VisionMaster;
  */
 public class Robot extends TimedRobot {
 
-	public static ShooterSystem shooterSystem;
 	public static DriveSystem driveSystem;
+	
+	public static TurretShooterSystem turretShooterSystem;
+	public static TurretPanSystem turretPanSystem;
+	public static TurretTiltSystem turretTiltSystem;
+	
 	public static OI oi;
 
 	//public static LinkedList<String> logFile;
@@ -46,14 +52,15 @@ public class Robot extends TimedRobot {
 		//logFile = new LinkedList<>();
 		//logFile.add("Robot is on");
 
-		shooterSystem = new ShooterSystem();
+		shooterSystem = new TurretShooterSystem();
 		driveSystem = new DriveSystem();
+		turretPanSystem = new TurretPanSystem();
+		turretTiltSystem = new TurretTiltSystem();
 
 		oi = new OI();
-		
-
+	
 		VM = new VisionMaster(oi.VC, RobotMap.MAX_DECODER_HOSTORY_SIZE, RobotMap.CAMERA_ANGLE,
-				RobotMap.CAMERA_WIDTH, RobotMap.NT_VALUE_NAME, RobotMap.OFFSEAT_CAMERA_FROM_CENTER);
+				RobotMap.CAMERA_WIDTH, RobotMap.NT_VALUE_NAME, RobotMap.OFFSEAT_CAMERA_FROM_CENTER, true);
 		
 		oi.loadOIs();
 

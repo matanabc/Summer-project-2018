@@ -5,19 +5,19 @@ import MotionProfiling.PID_Classes.PID_Variables;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import vision.VisionClass.VisionMaster;
-import vision.VisionControllers.PanVisionController;
+import vision.VisionControllers.VisionControllerInterface;
 
 /**
  *
  */
 public class VisionPWMCommand extends Command {
 
-	private PanVisionController VC;
+	private VisionControllerInterface VC;
 	private PID_Gains gains_;
 	private PID_Variables pidV_;
 	private VisionMaster VM;
 
-	public VisionPWMCommand(VisionMaster VM, PanVisionController VC) {
+	public VisionPWMCommand(VisionMaster VM, VisionControllerInterface VC) {
 
 		this.VC = VC;
 		this.gains_ = VC.getGains();

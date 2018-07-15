@@ -13,31 +13,31 @@ public interface VisionControllerInterface{
 	
 	/**
 	 * @return 
-	 * need to return the PID_Gains of your system to control 
+	 * need to return the PID_Gains of your system  if you use PWM control, if not return null 
 	 */
 	public PID_Gains getGains();
 	
 	/**
 	 * @return 
-	 * need to return value of sensor to use in the controller
+	 * need to return value of sensor to use in the PWM controller and for history, if you don't want to do both return 0
 	 */
 	public double getSource();
 
 	/**
 	 * @param 
-	 * output	-		this will be the output for what you want it to control like motors or servo
+	 * output	-		this will be the output or position for what you want it to control like motors or servo
 	 */
 	public void setOutput(double output);
 	
 	/**
 	 * @return 
-	 * need to return max output  
+	 * need to return max output if you use PWM control, if not return 0  
 	 */
 	public double getMaxOutput();
 	
 	/**
 	 * @return 
-	 * need to return max error, it will stop the PID if he between those value
+	 * need to return max error if you use PWM control, it will stop the PID if he between those value, if not return 0
 	 */
 	public double getMaxerror();
 	
