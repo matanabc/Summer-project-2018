@@ -2,6 +2,7 @@ package vision.VisionControllers;
 
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
 import robot.RobotMap;
 import vision.VisionClass.VisionControllerInterface;
@@ -11,7 +12,7 @@ public class TurretPanVisionController implements VisionControllerInterface{
 	@Override
 	public double getSource() {
 		// Need to return Source for PID
-		return Robot.turretPanSystem.getSideEncoderPosition();
+		return Robot.turretPanSystem.getSideEncoderPosition() + 10;
 	}
 
 	@Override
@@ -23,7 +24,9 @@ public class TurretPanVisionController implements VisionControllerInterface{
 	@Override
 	public void setOutput(double output) {
 		// Need to put the output value for motors
-		Robot.turretPanSystem.setSideMotorSetPoint(output);
+		//Robot.turretPanSystem.setSideMotorSetPoint(output);
+		SmartDashboard.putNumber("SetOutpot!!!!", output);
+
 	}
 
 	@Override

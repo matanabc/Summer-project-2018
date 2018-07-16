@@ -20,6 +20,8 @@ public abstract class CommandWrite extends Command {
 
 	protected void initialize() {   	
 		write.add(commandName + " is initialize");
+		
+		initializeWrite();
 
 		this.isExecute = false;
 	}
@@ -31,6 +33,8 @@ public abstract class CommandWrite extends Command {
 			write.add(commandName + " is execute");
 			this.isExecute = true;
 		}
+		
+		executeWrite();
 	}
 
 	protected abstract boolean isFinished();

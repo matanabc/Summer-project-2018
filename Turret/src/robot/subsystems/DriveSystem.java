@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
 import robot.commands.drive.DriveWithJoystickCommanWrite;
+import robot.commands.drive.DriveWithJoysticks;
 
 
 public class DriveSystem extends Subsystem{
@@ -25,7 +26,7 @@ public class DriveSystem extends Subsystem{
 	
 	private AHRS navX;
 	
-	private PID_Gains visionGains = new PID_Gains(0.5, 0, 0);
+	private PID_Gains visionGains = new PID_Gains(0.1, 0, 0.4);
 	
 	public DriveSystem() {
 		CreatNavX();

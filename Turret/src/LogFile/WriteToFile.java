@@ -4,17 +4,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.LinkedList;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
 
 public class WriteToFile implements Runnable{
 
 	protected FileWriter fw;
 	protected BufferedWriter bw;
-	
+
 	protected LinkedList<String> writeToFile;
 
 	public WriteToFile(LinkedList<String> writeToFile) {
-		
+
 		this.writeToFile = writeToFile;
 
 		startToWrite();
@@ -42,18 +43,25 @@ public class WriteToFile implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void startToWrite() {
 		try {
+			
+			cleanFile();
+			
 			fw = new FileWriter(RobotMap.FILE_PLACE, true);
 			bw = new BufferedWriter(fw);
-			
+
 			writeToFile("Robot is on");
-			
+
 			new Thread(this).start();
+			
+			SmartDashboard.putString("Log File Masage: ", "Starting to write");
 
 		}catch (Exception e) {
 			e.printStackTrace();
+
+			SmartDashboard.putString("Log File Masage: ", "Error: " + e.getMessage());
 		}
 	}
 
@@ -70,7 +78,7 @@ public class WriteToFile implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void stopToWrite() {
 		try {
 			bw.close();

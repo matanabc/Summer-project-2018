@@ -27,7 +27,7 @@ public class VisionMaster{
 	private TreeMap<Long,Double> panHistory;
 	private TreeMap<Long,Double> tiltHistory;
 
-	
+
 	/**
 	 * @param 
 	 * VC	-		this need to be vision controller you use for pan or tilt.
@@ -58,7 +58,7 @@ public class VisionMaster{
 		this.senterInPixel = cameraWidth / 2;
 		this.NTValueName = NTValueName;
 		this.offSet = offSet;
-		
+
 		if(panTtiltF){
 			this.VCPan = VC;
 		}else{
@@ -76,7 +76,7 @@ public class VisionMaster{
 		data = new VisionData(0, 0);
 	}
 
-	
+
 	/**
 	 * @param 
 	 * VCPan	-		this need to be vision controller you use for pan.
@@ -123,9 +123,9 @@ public class VisionMaster{
 
 	//Don't change if you don't need to!!!
 	public void addPanAndTiltPositionToHistory() {
-		
+
 		if(singleTbothF){
-			
+
 			if(panTtiltF){
 				//Add position and time to history
 				panHistory.put(Calendar.getInstance().getTimeInMillis(), VCPan.getSource());
@@ -134,7 +134,7 @@ public class VisionMaster{
 				if(panHistory.size() > this.maxDecoderHestorySize) {
 					panHistory.remove(panHistory.firstKey());	
 				}
-				
+
 			}else{
 				//Add position and time to history
 				tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VCTilt.getSource());
@@ -144,18 +144,18 @@ public class VisionMaster{
 					tiltHistory.remove(tiltHistory.firstKey());	
 				}
 			}
-			
+
 		}else{
-			
+
 			//Add position and time to history
 			panHistory.put(Calendar.getInstance().getTimeInMillis(), VCPan.getSource());
 			tiltHistory.put(Calendar.getInstance().getTimeInMillis(), VCTilt.getSource());
-			
+
 			// remove the lowest key so he don't grow forever...
 			if(panHistory.size() > this.maxDecoderHestorySize) {
 				panHistory.remove(panHistory.firstKey());	
 			}
-			
+
 			// remove the lowest key so he don't grow forever...
 			if(tiltHistory.size() > this.maxDecoderHestorySize) {
 				tiltHistory.remove(tiltHistory.firstKey());	
@@ -197,7 +197,7 @@ public class VisionMaster{
 	}
 
 	//Don't change if you don't need to!!!
-	
+
 	/**
 	 * @return
 	 * it will return you object of the data from the vision, 
@@ -205,24 +205,35 @@ public class VisionMaster{
 	 */
 	public VisionData getTargetPosition() {
 
-		String [] TargetInfo = SmartDashboard.getString(this.NTValueName, "0;").split(";");
+		try{
+			String [] TargetInfo = SmartDashboard.getString(this.NTValueName, "0;").split(";");
 
-		/*
-		 *	TargetInfo[0] - get the x pixel from the frame
-		 *	TargetInfo[1] - get the x pixel from the frame
-		 *	TargetInfo[2] - get the time when the frame was taking
-		 */
+			/*
+			 *	TargetInfo[0] - get the x pixel from the frame
+			 *	TargetInfo[1] - get the x pixel from the frame
+			 *	TargetInfo[2] - get the time when the frame was taking
+			 */
 
-		if(TargetInfo.length == 3){//if the data is came;
-			if(Long.parseLong(TargetInfo[2]) > lastTime){//if the frame take after the last time
+			if(TargetInfo.length == 3){//if the data is came;
+				if(Long.parseLong(TargetInfo[2]) > lastTime){//if the frame take after the last time
 
-				lastTime = Double.parseDouble(TargetInfo[2]);//change the last time 
-				
-				setVisionData(TargetInfo);
+					lastTime = Double.parseDouble(TargetInfo[2]);//change the last time 
+
+					setVisionData(TargetInfo);
+				}
 			}
+			
+			SmartDashboard.putString("Data vision error", "there was not error whet the data vision");
+			
+			return data;
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+			SmartDashboard.putString("Data vision error", "there was a error whet the data vision, " + e.getMessage());
+			
+			return data;
 		}
-		//return new VisionData(0, 0); //there is problem with the data from the vision
-		return data;
 	}
 
 	//Don't change if you don't need to!!!
@@ -231,16 +242,16 @@ public class VisionMaster{
 	}	
 
 	protected void setVisionData(String [] TargetInfo){
-		
+
 		if(singleTbothF){
 			if(panTtiltF){
 				this.data.setTargetAngle(
 
 						(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
 
-						- 	//need to check it it cold be - or +
+								- 	//need to check it it cold be - or +
 
-						((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
+								((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
 
 						+
 
@@ -252,8 +263,8 @@ public class VisionMaster{
 				this.data.setTargetAngle(Double.parseDouble(TargetInfo[0])); //offSeat from target if camera is not in the center
 
 				this.data.setTargetHeight(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
-													getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
-				
+						getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
+
 			}
 
 		} else {
@@ -262,9 +273,9 @@ public class VisionMaster{
 
 					(getPanPositionFromTime(Long.parseLong(TargetInfo[2])) //position when the frame was take
 
-					- 	//need to check it it cold be - or +
+							- 	//need to check it it cold be - or +
 
-					((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
+							((Double.parseDouble(TargetInfo[0]) - this.senterInPixel) * this.pixelToAngle)) //angle error when the frame was take
 
 					+
 
@@ -272,7 +283,7 @@ public class VisionMaster{
 
 			this.data.setTargetHeight(VCTilt.castYpixel(Double.parseDouble(TargetInfo[1]),
 					getTiltPositionFromTime(Long.parseLong(TargetInfo[2]))));
-			
+
 		}
 	}
 }

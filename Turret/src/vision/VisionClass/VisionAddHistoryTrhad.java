@@ -8,7 +8,11 @@ public class VisionAddHistoryTrhad  implements Runnable{
 	public void run() {
 		while(true){
 			//Robot.vision.addEncoderPositionToHistory();
-			Robot.VM.addPanAndTiltPositionToHistory();
+			if(Robot.VM != null){
+				Robot.VM.addPanAndTiltPositionToHistory();
+			}else{
+				System.out.println("Vision master is null!!!");
+			}
 		}
 	}
 

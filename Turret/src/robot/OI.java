@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.TurretCommands.PanTiltAndShootCommand;
 import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
 import robot.commands.drive.DriveSpeed;
+import vision.VisionCommands.VisionPWMCommand;
 import vision.VisionControllers.PanVisionController;
 import vision.VisionControllers.TurretPanVisionController;
 import vision.VisionControllers.TurretTiltVisionController;
@@ -46,5 +47,8 @@ public class OI {
 		AdelBtns[0].whileHeld(new PanTiltAndShootCommand(Robot.VM, TPVC, TTVC, 1));
 		
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
+
+		AdelBtns[2].whileHeld(new VisionPWMCommand(Robot.VM, VC, true));
+
 	}
 }

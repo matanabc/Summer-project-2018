@@ -52,9 +52,9 @@ public class RobotMap {
 	public static final double OFFSEAT_CAMERA_FROM_CENTER = 0;
 	public static final double PAN_MAX_OUTPUT = 0.4;
 	public static final double PAN_MAX_ERROR = 1;
-	public static final double TILT_MAX_OUTPUT = 0.4;
+	public static final double TILT_MAX_OUTPUT = 0.3;
 	public static final double TILT_MAX_ERROR = 1;
 	
 	//write command
-	public static final String FILE_PLACE = "";
+	public static final String FILE_PLACE = "/home/admin/LogFile.txt";
 }
