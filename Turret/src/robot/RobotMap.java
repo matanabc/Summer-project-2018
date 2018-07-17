@@ -43,6 +43,8 @@ public class RobotMap {
 	
 	public static final int SERVO_MIN_ANGLE = 0;
 	public static final int SERVO_MAX_ANGLE = 50;
+	
+	public static final double MAX_RPM_ERROR = 200;
 
 	//vision
 	public static final int MAX_DECODER_HOSTORY_SIZE = 1000;

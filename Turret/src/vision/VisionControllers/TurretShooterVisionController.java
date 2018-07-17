@@ -6,7 +6,7 @@ import robot.Robot;
 import robot.RobotMap;
 import vision.VisionClass.VisionControllerInterface;
 
-public class TurretTiltVisionController implements VisionControllerInterface{
+public class TurretShooterVisionController implements VisionControllerInterface{
 
 	@Override
 	public double getSource() {
@@ -17,13 +17,13 @@ public class TurretTiltVisionController implements VisionControllerInterface{
 	@Override
 	public Subsystem getSubsystem() {
 		// Need to return the subsystem who will do the tilt
-		return Robot.turretTiltSystem;
+		return Robot.turretShooterSystem;
 	}
 
 	@Override
 	public void setOutput(double output) {
 		// Need to put the output value for motors
-		Robot.turretTiltSystem.setpointPosition(castYpixel(output, 0));
+		Robot.turretShooterSystem.setShootRPM(castYpixel(output, 0));
 	}
 
 	@Override

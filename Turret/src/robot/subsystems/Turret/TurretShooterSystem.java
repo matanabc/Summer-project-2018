@@ -13,6 +13,8 @@ public class TurretShooterSystem extends Subsystem {
 
 	private WPI_TalonSRX masterShootMotor_ = new WPI_TalonSRX(RobotMap.MASTER_SHOOTER_MOTOR_CAN);
 	private WPI_TalonSRX slaveShootMotor_= new WPI_TalonSRX(RobotMap.SLAVE_SHOOTER_MOTOR_CAN);
+	
+	private double neededRPM = 0;
 
 	//private VictorSP sideMotor_ = new VictorSP(RobotMap.SIDE_MOTOR_CAN);
 
@@ -64,6 +66,12 @@ public class TurretShooterSystem extends Subsystem {
 		//rpm = rpm / RobotMap.PULLS_PER_TIC;
 		masterShootMotor_.set(rpm);
 		slaveShootMotor_.set(-rpm);
+		
+		neededRPM = rpm;
+	}
+	
+	public boolean getReadyToShoot() {
+		return neededRPM - getShooterVelocity() <= RobotMap.MAX_RPM_ERROR;
 	}
 
 	/*public void addEncoderPoditionToHistory() {

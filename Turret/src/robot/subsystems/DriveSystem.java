@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.Robot;
 import robot.RobotMap;
 import robot.commands.drive.DriveWithJoystickCommanWrite;
 import robot.commands.drive.DriveWithJoysticks;
@@ -92,6 +93,10 @@ public class DriveSystem extends Subsystem{
 	
 	public float getAngleNavx(){
 		return navX.getYaw();
+	}
+	
+	public boolean getReadyToShoot() {
+		return Math.abs(Robot.VM.getTargetPosition().getTargetAngle() - getAngleNavx()) <= RobotMap.PAN_MAX_ERROR;
 	}
 	
 	/*public void enablePIDTurn() {

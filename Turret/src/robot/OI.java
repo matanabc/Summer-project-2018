@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.TurretCommands.PanTiltAndShootCommand;
 import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
 import robot.commands.drive.DriveSpeed;
+import vision.VisionCommands.VisionCommand;
 import vision.VisionCommands.VisionPWMCommand;
 import vision.VisionControllers.PanVisionController;
 import vision.VisionControllers.TurretPanVisionController;
+import vision.VisionControllers.TurretShooterVisionController;
 import vision.VisionControllers.TurretTiltVisionController;
 
 /**
@@ -31,6 +33,7 @@ public class OI {
 	
 	public TurretPanVisionController TPVC = new TurretPanVisionController();
 	public TurretTiltVisionController TTVC = new TurretTiltVisionController();
+	public TurretShooterVisionController TSVC = new TurretShooterVisionController();
 
 	public OI(){
 		for (int i = 0; i < 12; i ++){
@@ -44,11 +47,11 @@ public class OI {
 		AdelBtns[5].whileHeld(new DriveSpeed(-RobotMap.DRIVE_SLOW, RobotMap.DRIVE_SLOW));//Turn right
 		AdelBtns[4].whileHeld(new DriveSpeed(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
 		
-		AdelBtns[0].whileHeld(new PanTiltAndShootCommand(Robot.VM, TPVC, TTVC, 1));
+		AdelBtns[0].whileHeld(new PanTiltAndShootCommand(Robot.VM, TPVC, TTVC, TSVC));
 		
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 
-		AdelBtns[2].whileHeld(new VisionPWMCommand(Robot.VM, VC, true));
+		AdelBtns[2].whileHeld(new VisionCommand(Robot.VM, VC, true, true));
 
 	}
 }
