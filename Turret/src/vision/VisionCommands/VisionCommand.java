@@ -43,6 +43,7 @@ public class VisionCommand extends Command {
 		this.panTtiltF = panTtiltF;
 		this.PIDTsetpointF = PIDTsetpointF;
 		
+		this.gains_ = VC.getGains();
 		pidV_ = new PID_Variables();
 		pidV_.maxOutput = VC.getMaxOutput();
 		pidV_.maxErr = VC.getMaxerror();

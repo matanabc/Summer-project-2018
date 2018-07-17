@@ -27,7 +27,7 @@ public class DriveSystem extends Subsystem{
 	
 	private AHRS navX;
 	
-	private PID_Gains visionGains = new PID_Gains(0.1, 0, 0.4);
+	private PID_Gains visionGains = new PID_Gains(0.05, 0, 0.3);
 	
 	public DriveSystem() {
 		CreatNavX();
