@@ -2,8 +2,10 @@ package LogFile;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Calendar;
 import java.util.LinkedList;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.RobotMap;
 
@@ -13,8 +15,14 @@ public class WriteToFile implements Runnable{
 	protected BufferedWriter bw;
 
 	protected LinkedList<String> writeToFile;
+	
+	protected String timeStatus;
+	protected long statusStart;
 
 	public WriteToFile(LinkedList<String> writeToFile) {
+		
+		timeStatus = "Disabled";
+		statusStart = Calendar.getInstance().getTimeInMillis();
 
 		this.writeToFile = writeToFile;
 
@@ -31,12 +39,14 @@ public class WriteToFile implements Runnable{
 				}
 				writeToFile(writeToFile.removeFirst());
 			}
+			
+			resetTime();
 		}
 	}
 
 	protected void writeToFile(String write) {
 		try {
-			bw.write(write);
+			bw.write(write + getTime());
 			bw.newLine();
 			bw.flush();
 		}catch (Exception e) {
@@ -85,6 +95,23 @@ public class WriteToFile implements Runnable{
 			fw.close();
 		}catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	protected String getTime(){
+		return " " + Long.toString((Calendar.getInstance().getTimeInMillis() - statusStart) / 1000) + " seconds from start " + timeStatus;
+	}
+	
+	protected void resetTime(){
+		if (DriverStation.getInstance().isAutonomous() && !timeStatus.equals("Auto")) {
+			timeStatus = "Auto";
+			statusStart = Calendar.getInstance().getTimeInMillis();
+		}else if (DriverStation.getInstance().isOperatorControl() && !timeStatus.equals("tele")) {
+			timeStatus = "tele";
+			statusStart = Calendar.getInstance().getTimeInMillis();
+		}else if (DriverStation.getInstance().isDisabled() && !timeStatus.equals("Disabled")) {
+			timeStatus = "Disabled";
+			statusStart = Calendar.getInstance().getTimeInMillis();
 		}
 	}
 }

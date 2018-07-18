@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import robot.commands.TurretCommands.PanTiltAndShootCommand;
 import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
 import robot.commands.drive.DriveSpeed;
+import robot.commands.drive.DriveSpeedCommandWrite;
 import vision.VisionCommands.VisionCommand;
 import vision.VisionControllers.PanVisionController;
 import vision.VisionControllers.TurretPanVisionController;
@@ -43,8 +44,8 @@ public class OI {
 	public void loadOIs(){		
 
 		//Adel turn slow speed 
-		AdelBtns[5].whileHeld(new DriveSpeed(-RobotMap.DRIVE_SLOW, RobotMap.DRIVE_SLOW));//Turn right
-		AdelBtns[4].whileHeld(new DriveSpeed(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
+		AdelBtns[5].whileHeld(new DriveSpeedCommandWrite(-RobotMap.DRIVE_SLOW, RobotMap.DRIVE_SLOW));//Turn right
+		AdelBtns[4].whileHeld(new DriveSpeedCommandWrite(RobotMap.DRIVE_SLOW, -RobotMap.DRIVE_SLOW));//Turn left
 		
 		AdelBtns[0].whileHeld(new PanTiltAndShootCommand(Robot.VM, TPVC, TTVC, TSVC));
 		
