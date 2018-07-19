@@ -26,7 +26,7 @@ public class RobotMap {
 	//pwm
 	public static final int DRIVE_RIGHT_PWM = 0;
 	public static final int DRIVE_LEFT_PWM = 1;
-	public static final int TILT_SERVO_PWM = 2;
+	public static final int TILT_SERVO_PWM = 3;
 
 	//drive
 	public static final double DRIVE_SLOW = 0.5;

@@ -10,7 +10,9 @@ package robot;
 import java.util.LinkedList;
 
 import LogFile.WriteToFile;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -42,6 +44,8 @@ public class Robot extends TimedRobot {
 	public static WriteToFile writeToFile;
 
 	public static VisionMaster VM;
+	
+	public static VictorSP s;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -55,6 +59,8 @@ public class Robot extends TimedRobot {
 
 		logFile = new LinkedList<>();
 		writeToFile = new WriteToFile(logFile);
+		
+		s = new VictorSP(2);
 
 		turretShooterSystem = new TurretShooterSystem();
 		driveSystem = new DriveSystem();
@@ -156,6 +162,8 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		print();
+		
+		s.set(oi.AdelStick.getRawAxis(5) * 0.6);
 	}
 
 	/**
@@ -164,6 +172,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
 
 	public void print(){
 		//Turret prints
@@ -181,5 +190,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Target Height", VM.getTargetPosition().getTargetHeight());
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
+		
+		SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
+		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
+		SmartDashboard.putNumber("Team Location", DriverStation.getInstance().getLocation());
+		SmartDashboard.putNumber("Match Number", DriverStation.getInstance().getMatchNumber());
+		SmartDashboard.putString("Alliance Name", DriverStation.getInstance().getAlliance().name());
+		SmartDashboard.putString("Match Time", DriverStation.getInstance().getEventName());
 	}
 }
