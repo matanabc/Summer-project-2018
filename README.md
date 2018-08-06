@@ -15,7 +15,7 @@ there is code in java and python:
    - for Wpilib python network table git: https://github.com/robotpy/pynetworktables.
  * run the python code and screen will show up, change the last vaulue to 1 to start changing the HSV values. 
 
-Pi:
+**Pi:**
 Pi folder contain the vision code for the raspberry.
 
 * copy the code to the raspberry.
