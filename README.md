@@ -4,6 +4,7 @@
 Camputer folder contain the code to change the HSV value in the Raspberry via PC, the values for HSV will be save automatic in the rasperry, you can find the HSV vales in "java" directory in file named "Values", make sure the camputer is connecting to the robot will you canging the HSV values.
 
 there is code in java and python:	
+ 
  if you whant to use java code:
  * open the java project in eclipse and add the jar from the folder 'NTJar'.
  * run the code and screen will show up.
