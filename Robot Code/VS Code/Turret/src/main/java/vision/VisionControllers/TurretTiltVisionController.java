@@ -3,7 +3,6 @@ package vision.VisionControllers;
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.Robot;
-import robot.RobotMap;
 import vision.VisionClass.VisionControllerInterface;
 
 public class TurretTiltVisionController implements VisionControllerInterface{

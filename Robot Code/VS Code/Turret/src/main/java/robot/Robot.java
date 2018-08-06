@@ -6,11 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 package robot;
-
 import java.util.LinkedList;
-
 import LogFile.WriteToFile;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
@@ -191,7 +190,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
 		
-		SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
+		SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
 		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
 		SmartDashboard.putNumber("Team Location", DriverStation.getInstance().getLocation());
 		SmartDashboard.putNumber("Match Number", DriverStation.getInstance().getMatchNumber());
