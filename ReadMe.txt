@@ -16,7 +16,7 @@ Pi:
 
 -in the first time i recomend to do build for the code by going to "java" directory and type "./grblew build"
 
--to run the cod go to the "java" directory and run the code buy typing "./grblew run --offline"
+-to run the code go to the "java" directory and run the code buy typing "./grblew run --offline"
 
 
 good luck, and i hope i help.
