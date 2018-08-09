@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
 import robot.RobotMap;
 import robot.commands.drive.DriveWithJoystickCommanWrite;
-import robot.commands.drive.DriveWithJoysticks;
 
 
 public class DriveSystem extends Subsystem{
@@ -29,7 +28,9 @@ public class DriveSystem extends Subsystem{
 	
 	private PID_Gains visionGains = new PID_Gains(0.05, 0, 0.3);
 	
-	public DriveSystem() {
+	private static DriveSystem mInstance = new DriveSystem();
+	
+	private DriveSystem() {
 		CreatNavX();
 		
 		/*this.leftMotorsPID = new PIDController(0.1, 0, 0, navX, this.leftMotor_);
@@ -37,6 +38,10 @@ public class DriveSystem extends Subsystem{
 		this.leftMotorsPID.setOutputRange(-0.3, 0.3);
 		this.rightMotorsPID.setOutputRange(-0.3, 0.3);
 		disablePIDTurn();*/
+	}
+	
+	public static DriveSystem getInstance() {
+		return mInstance;
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import vision.VisionClass.VisionMaster;
  */
 public class Robot extends TimedRobot {
 
-	public static DriveSystem driveSystem;
+	//public static DriveSystem driveSystem;
 
 	public static TurretShooterSystem turretShooterSystem;
 	public static TurretPanSystem turretPanSystem;
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
 		s = new VictorSP(2);
 
 		turretShooterSystem = new TurretShooterSystem();
-		driveSystem = new DriveSystem();
+		//driveSystem = new DriveSystem();
 		turretPanSystem = new TurretPanSystem();
 		turretTiltSystem = new TurretTiltSystem();
 
@@ -181,7 +181,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Servo position:", turretPanSystem.getSideEncoderPosition());
 
 		//Drive prints
-		SmartDashboard.putNumber("Navx angle", driveSystem.getAngleNavx());
+		SmartDashboard.putNumber("Navx angle", DriveSystem.getInstance().getAngleNavx());
 
 		//Vision prints
 		SmartDashboard.putNumber("Angle To Target", Math.abs(VM.getTargetPosition().getTargetAngle())

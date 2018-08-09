@@ -14,5 +14,8 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/LightDrive.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/abba/git/Summer-project-2018/Robot Code/Eclipse/Turret/JRS to add/CTRE_Phoenix.jar"/>
+	<classpathentry kind="lib" path="C:/Users/abba/git/Summer-project-2018/Robot Code/Eclipse/Turret/JRS to add/CTRE_Phoenix-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/abba/git/Summer-project-2018/Robot Code/Eclipse/Turret/JRS to add/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
