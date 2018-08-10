@@ -1,12 +1,10 @@
 package vision.VisionCommands;
 
-import MotionProfiling.MP_Classes.MP_Radius;
-import MotionProfiling.MP_Commands.MP_DrivePathFollower;
-import MotionProfiling.MP_Controllers.NavxTurnDriveController;
-import MotionProfiling.PID_Classes.PID_Gains;
-import MotionProfiling.PID_Classes.PID_Variables;
+import MotionProfiling.MP_Classes.MPGains;
+import MotionProfiling.MP_Classes.MP_Path;
+import MotionProfiling.PID_Classes.Setpoint;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import robot.subsystems.DriveSystem;
 import vision.VisionClass.VisionControllerInterface;
 import vision.VisionClass.VisionMaster;
 
@@ -16,56 +14,123 @@ import vision.VisionClass.VisionMaster;
 public class VisionMotionCommand extends Command {
 	
 	private VisionControllerInterface VC;
-	private VisionMaster VM;
+	//private VisionMaster VM;
 	
 	private boolean panTtiltF;
 
-    public VisionMotionCommand(VisionMaster VM, VisionControllerInterface VC, boolean panTtiltF) {
-        //requires(chassis);
-    	
-    	this.VC = VC;
-		this.VM = VM;
-		
-		this.panTtiltF = panTtiltF;
-		
-    }
+	private MP_Path motion_;
+	private double 	startingTime_, time_;
+	private MPGains gains_;
+	private double errorSum_, lastError_;
+	private double position_, Vmax_, Vend_, acc_;
+	private double startingPos_;
+	
+	private boolean end = false;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public VisionMotionCommand(VisionMaster VM, VisionControllerInterface VC, int sum, double Vmax, double Vend, double acc) {
+		
+		this.VC = VC;
+		//this.VM = VM;
+		
+		requires(VC.getSubsystem());
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	if(panTtiltF) {
-    		motionPan();
+		if(panTtiltF) {
+			position_ = VM.getTargetPosition().getTargetAngle();
 		}else {
-			motionTilt();
+			position_ = VM.getTargetPosition().getTargetHeight();
 		}
-    }
+	
+		Vmax_ = Math.abs(Vmax);
+		Vend_ = Math.abs(Vend);
+		acc_ = acc;
+		gains_ = VC.getMPGains();
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+	@Override
+	protected void initialize() {
+		end = false;
+		
+		//Setpoint currState = system_.getCurrState();
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+		Setpoint currState = new Setpoint(VC.getSource(), 0, 0); 
+				
+		startingPos_ = VC.getSource();
+		double distance = position_ - startingPos_;
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
-    
-    protected void motionPan() {
-    	new MP_DrivePathFollower(NavxTurnDriveController.getInstance(), 
-    							new MP_Radius(0, VM.getTargetPosition().getTargetAngle(), 2, 0, 0, 2, 2),
-    							VC.getMPGains());
-    }
-    
-    protected void motionTilt() {  	
-    	new MP_DrivePathFollower(NavxTurnDriveController.getInstance(), 
-				new MP_Radius(0, VM.getTargetPosition().getTargetHeight(), 2, 0, 0, 2, 2),
-				VC.getMPGains());
-    }
+		if (distance < 0){
+			motion_ = new MP_Path(distance, -Vmax_, currState.vel, -Vend_, acc_, acc_);
+		} else{
+			motion_ = new MP_Path(distance, Vmax_, currState.vel, Vend_, acc_, acc_);
+		}
+		
+		if (distance == 0){
+			end = true; 
+		}
+
+		startingTime_ = Timer.getFPGATimestamp();
+		errorSum_ = 0;
+		lastError_ = 0;
+		time_ = 0;
+	}
+
+	@Override
+	protected void execute() {
+		time_ = Timer.getFPGATimestamp() - startingTime_;
+
+		Setpoint setpoint = motion_.getCurrentState(time_);
+
+		double error = (startingPos_ + setpoint.pos) - VC.getSource();
+
+		double output = gains_.kv * setpoint.vel + gains_.ka * setpoint.acc +
+				error * gains_.kp + errorSum_ * gains_.ki + (error - lastError_) * gains_.kd;
+
+		errorSum_ += error;
+
+		if (error > 0 ^ lastError_ > 0){
+			errorSum_ = 0;
+		}
+
+		lastError_ = error;
+
+		/*
+		if(output > maxSpeed_ || output < -maxSpeed_){
+
+			output = maxSpeed_ * (output / Math.abs(output));
+		}*/
+		
+		VC.setOutput(output);
+
+		/*SmartDashboard.putNumber(system_.toString() + " output MP:", output);
+		SmartDashboard.putNumber(system_.toString() + " error MP:", error);
+		SmartDashboard.putNumber(system_.toString() + " setpoint.pos + startingPos", (startingPos_ + setpoint.pos));
+		SmartDashboard.putNumber(system_.toString() + " setpoint.pos", setpoint.pos);*/
+
+	}
+
+	@Override
+	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+		return time_ >= motion_.getTotalTime() || end;
+	}
+
+	@Override
+	protected void end() {
+		// TODO Auto-generated method stub
+		time_ = Timer.getFPGATimestamp() - startingTime_;
+		//system_.setCurrState(motion_.getCurrentState(time_));
+		
+		Setpoint tmp = motion_.getCurrentState(time_);
+		tmp.pos = position_;
+		//system_.setCurrState(tmp);
+
+		//SmartDashboard.putNumber("motion curr state", motion_.getCurrentState(time_).pos);
+
+		VC.setOutput(0);
+	}
+
+	@Override
+	protected void interrupted() {
+		// TODO Auto-generated method stub
+		end();
+	}
 }
