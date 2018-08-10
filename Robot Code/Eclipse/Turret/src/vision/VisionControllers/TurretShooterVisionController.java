@@ -1,8 +1,10 @@
 package vision.VisionControllers;
 
+import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import robot.Robot;
+import robot.subsystems.Turret.TurretShooterSystem;
 import vision.VisionClass.VisionControllerInterface;
 
 public class TurretShooterVisionController implements VisionControllerInterface{
@@ -16,19 +18,13 @@ public class TurretShooterVisionController implements VisionControllerInterface{
 	@Override
 	public Subsystem getSubsystem() {
 		// Need to return the subsystem who will do the tilt
-		return Robot.turretShooterSystem;
+		return TurretShooterSystem.getInstance();
 	}
 
 	@Override
 	public void setOutput(double output) {
 		// Need to put the output value for motors
-		Robot.turretShooterSystem.setShootRPM(castYpixel(output, 0));
-	}
-
-	@Override
-	public PID_Gains getGains() {
-		// Need to return PID Gains for tilt system
-		return null;
+		TurretShooterSystem.getInstance().setShootRPM(castYpixel(output, 0));
 	}
 
 	@Override
@@ -47,5 +43,17 @@ public class TurretShooterVisionController implements VisionControllerInterface{
 	public double castYpixel(double yPixel, double sourcePosition) {
 		// TODO Auto-generated method stub
 		return yPixel;
+	}
+
+	@Override
+	public PID_Gains getPIDGains() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MPGains getMPGains() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -34,9 +34,9 @@ public class Robot extends TimedRobot {
 
 	//public static DriveSystem driveSystem;
 
-	public static TurretShooterSystem turretShooterSystem;
-	public static TurretPanSystem turretPanSystem;
-	public static TurretTiltSystem turretTiltSystem;
+	//public static TurretShooterSystem turretShooterSystem;
+	//public static TurretPanSystem turretPanSystem;
+	//public static TurretTiltSystem turretTiltSystem;
 
 	public static OI oi;
 
@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
 
 	public static VisionMaster VM;
 	
-	public static VictorSP s;
+	//public static VictorSP s;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -60,12 +60,12 @@ public class Robot extends TimedRobot {
 		logFile = new LinkedList<>();
 		writeToFile = new WriteToFile(logFile);
 		
-		s = new VictorSP(2);
+		//s = new VictorSP(2);
 
-		turretShooterSystem = new TurretShooterSystem();
+		//turretShooterSystem = new TurretShooterSystem();
 		//driveSystem = new DriveSystem();
-		turretPanSystem = new TurretPanSystem();
-		turretTiltSystem = new TurretTiltSystem();
+		//turretPanSystem = new TurretPanSystem();
+		//turretTiltSystem = new TurretTiltSystem();
 
 		oi = new OI();
 
@@ -176,9 +176,9 @@ public class Robot extends TimedRobot {
 
 	public void print(){
 		//Turret prints
-		SmartDashboard.putNumber("Shooter velocity:", turretShooterSystem.getShooterVelocity());
-		SmartDashboard.putNumber("Turret position:", turretPanSystem.getSideEncoderPosition());
-		SmartDashboard.putNumber("Servo position:", turretPanSystem.getSideEncoderPosition());
+		SmartDashboard.putNumber("Shooter velocity:", TurretShooterSystem.getInstance().getShooterVelocity());
+		SmartDashboard.putNumber("Turret position:", TurretPanSystem.getInstance().getSideEncoderPosition());
+		SmartDashboard.putNumber("Servo position:", TurretPanSystem.getInstance().getSideEncoderPosition());
 
 		//Drive prints
 		SmartDashboard.putNumber("Navx angle", DriveSystem.getInstance().getAngleNavx());

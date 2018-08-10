@@ -1,5 +1,6 @@
 package vision.VisionClass;
 
+import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -13,9 +14,15 @@ public interface VisionControllerInterface{
 	
 	/**
 	 * @return 
-	 * need to return the PID_Gains of your system  if you use PWM control, if not return null 
+	 * need to return the PID_Gains of your system if you use PWM control and want to do PID, if not return null 
 	 */
-	public PID_Gains getGains();
+	public PID_Gains getPIDGains();
+	
+	/**
+	 * @return 
+	 * need to return the MPGains of your system if you use PWM control and want to do Motion, if not return null 
+	 */
+	public MPGains getMPGains();
 	
 	/**
 	 * @return 

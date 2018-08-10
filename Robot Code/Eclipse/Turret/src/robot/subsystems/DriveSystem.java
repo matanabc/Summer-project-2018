@@ -2,6 +2,7 @@ package robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
@@ -26,7 +27,7 @@ public class DriveSystem extends Subsystem{
 	
 	private AHRS navX;
 	
-	private PID_Gains visionGains = new PID_Gains(0.05, 0, 0.3);
+	//private PID_Gains visionGains = new PID_Gains(0.05, 0, 0.3);
 	
 	private static DriveSystem mInstance = new DriveSystem();
 	
@@ -69,7 +70,11 @@ public class DriveSystem extends Subsystem{
 	}
 	
 	public PID_Gains getVisoinPanPIDGains(){
-		return visionGains;
+		return RobotMap.DRIVE_PAN_ENCODER_PID_GAINS;
+	}
+	
+	public MPGains getVisoinPanMPGains(){
+		return RobotMap.DRIVE_PAN_NAVX_MP_GAINS;
 	}
 	
 	public void CreatNavX() {
@@ -101,7 +106,7 @@ public class DriveSystem extends Subsystem{
 	}
 	
 	public boolean getReadyToShoot() {
-		return Math.abs(Robot.VM.getTargetPosition().getTargetAngle() - getAngleNavx()) <= RobotMap.PAN_MAX_ERROR;
+		return Math.abs(Robot.VM.getTargetPosition().getTargetAngle() - getAngleNavx()) <= RobotMap.DRIVE_PAN_MAX_ERROR;
 	}
 	
 	/*public void enablePIDTurn() {

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
+import robot.subsystems.DriveSystem;
 
 public class MP_DrivePathFollower extends Command {
 
@@ -25,7 +26,7 @@ public class MP_DrivePathFollower extends Command {
 
 	public MP_DrivePathFollower(MPDriveController driveController, MP_DrivePath path, MPGains gains) {
 		// TODO Auto-generated constructor stub
-		requires(Robot.driveSystem);
+		requires(DriveSystem.getInstance());
 
 		path_ = path;
 
