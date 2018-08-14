@@ -11,10 +11,17 @@ public class TurretTiltSystem extends Subsystem {
 	
 	private Servo tiltServo = new Servo(RobotMap.TILT_SERVO_PWM);
 	
-	public TurretTiltSystem(){
+	private static TurretTiltSystem mInstance = new TurretTiltSystem();
+	
+	private TurretTiltSystem(){
 		setpointPosition(RobotMap.SERVO_MIN_ANGLE);
 	}
+	
+	public static TurretTiltSystem getInstance() {
+		return mInstance;
+	}
 
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

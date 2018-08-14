@@ -14,9 +14,15 @@ public class TurretPanSystem extends Subsystem {
 
 	private WPI_TalonSRX sideMoter_ = new WPI_TalonSRX(RobotMap.SIDE_MOTOR_CAN);
 	
-	public TurretPanSystem() {
+	private static TurretPanSystem mInstance = new TurretPanSystem();
+	
+	private TurretPanSystem() {
 		resetTalon();
 		setSideToStay();
+	}
+	
+	public static TurretPanSystem getInstance() {
+		return mInstance;
 	}
 
     public void initDefaultCommand() {

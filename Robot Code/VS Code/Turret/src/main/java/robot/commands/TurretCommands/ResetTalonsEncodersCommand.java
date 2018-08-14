@@ -2,6 +2,7 @@ package robot.commands.TurretCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
+import robot.subsystems.Turret.TurretPanSystem;
 
 /**
  *
@@ -10,17 +11,17 @@ public class ResetTalonsEncodersCommand extends Command {
 
     public ResetTalonsEncodersCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.turretPanSystem);
+        requires(TurretPanSystem.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-		Robot.turretPanSystem.resetTalon();
+		TurretPanSystem.getInstance().resetTalon();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		Robot.turretPanSystem.resetTalon();
+		TurretPanSystem.getInstance().resetTalon();
     }
 
     // Make this return true when this Command no longer needs to run execute()

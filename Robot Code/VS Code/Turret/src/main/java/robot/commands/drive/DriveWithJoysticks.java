@@ -2,6 +2,7 @@
 
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
+import robot.subsystems.DriveSystem;
 
 public class DriveWithJoysticks extends Command{
 
@@ -10,7 +11,7 @@ public class DriveWithJoysticks extends Command{
 	
 	public DriveWithJoysticks() {
 		// TODO Auto-generated constructor stub
-		requires(Robot.driveSystem);
+		requires( DriveSystem.getInstance());
 	}
 	
 	
@@ -23,7 +24,7 @@ public class DriveWithJoysticks extends Command{
 		speed_ = Robot.oi.AdelStick.getRawAxis(1);
 		turn_ = Robot.oi.AdelStick.getRawAxis(3) - Robot.oi.AdelStick.getRawAxis(2);//4	-
 	
-		Robot.driveSystem.arcade(-speed_, turn_);
+		 DriveSystem.getInstance().arcade(-speed_, turn_);
 	}
 
 	
@@ -35,7 +36,7 @@ public class DriveWithJoysticks extends Command{
 	@Override
 	protected void end() {
 		// TODO Auto-generated method stub
-		Robot.driveSystem.tank(0,0);
+		 DriveSystem.getInstance().tank(0,0);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import robot.Robot;
+import robot.subsystems.DriveSystem;
 
 /**
  *
@@ -12,7 +12,7 @@ public class DriveSpeed extends Command {
 
 	public DriveSpeed(double speedLeft, double speedRight) {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.driveSystem);
+		requires(DriveSystem.getInstance());
 		this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 	}
@@ -23,7 +23,7 @@ public class DriveSpeed extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.driveSystem.tank(speedRight, speedLeft);
+		 DriveSystem.getInstance().tank(speedRight, speedLeft);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -33,7 +33,7 @@ public class DriveSpeed extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.driveSystem.tank(0, 0);
+		 DriveSystem.getInstance().tank(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

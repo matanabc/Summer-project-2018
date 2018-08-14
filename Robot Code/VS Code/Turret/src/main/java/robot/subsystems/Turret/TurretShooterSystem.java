@@ -15,6 +15,8 @@ public class TurretShooterSystem extends Subsystem {
 	private WPI_TalonSRX slaveShootMotor_= new WPI_TalonSRX(RobotMap.SLAVE_SHOOTER_MOTOR_CAN);
 	
 	private double neededRPM = 0;
+	
+	private static TurretShooterSystem mInstance = new TurretShooterSystem();
 
 	//private VictorSP sideMotor_ = new VictorSP(RobotMap.SIDE_MOTOR_CAN);
 
@@ -22,8 +24,12 @@ public class TurretShooterSystem extends Subsystem {
 	//private TreeMap<Long,Double> encoderHistory = new TreeMap<Long,Double>();
 
 
-	public TurretShooterSystem(){
+	private TurretShooterSystem(){
 		resetTalon();
+	}
+	
+	public static TurretShooterSystem getInstance() {
+		return mInstance;
 	}
 
 	public void initDefaultCommand() {

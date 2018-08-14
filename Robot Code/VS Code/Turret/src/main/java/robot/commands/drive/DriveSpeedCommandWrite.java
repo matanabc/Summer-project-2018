@@ -2,6 +2,7 @@ package robot.commands.drive;
 
 import LogFile.CommandWrite;
 import robot.Robot;
+import robot.subsystems.DriveSystem;
 
 public class DriveSpeedCommandWrite extends CommandWrite{
 
@@ -10,7 +11,7 @@ public class DriveSpeedCommandWrite extends CommandWrite{
 	public DriveSpeedCommandWrite(double speedLeft, double speedRight) {
 		super("Drive turn low speed button",  Robot.logFile);
 
-		requires(Robot.driveSystem);
+		requires( DriveSystem.getInstance());
 		this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 	}
@@ -24,7 +25,7 @@ public class DriveSpeedCommandWrite extends CommandWrite{
 	@Override
 	protected void executeWrite() {
 		// TODO Auto-generated method stub
-		Robot.driveSystem.tank(speedRight, speedLeft);
+		 DriveSystem.getInstance().tank(speedRight, speedLeft);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class DriveSpeedCommandWrite extends CommandWrite{
 	protected void endWrite() {
 		// TODO Auto-generated method stub
 
-		Robot.driveSystem.tank(0, 0);
+		 DriveSystem.getInstance().tank(0, 0);
 	}
 
 }

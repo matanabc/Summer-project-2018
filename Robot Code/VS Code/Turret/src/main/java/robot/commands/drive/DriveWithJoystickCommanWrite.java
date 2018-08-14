@@ -2,6 +2,7 @@ package robot.commands.drive;
 
 import LogFile.CommandWrite;
 import robot.Robot;
+import robot.subsystems.DriveSystem;
 
 public class DriveWithJoystickCommanWrite extends CommandWrite {
 
@@ -10,7 +11,7 @@ public class DriveWithJoystickCommanWrite extends CommandWrite {
 	public DriveWithJoystickCommanWrite() {
 		super("Drive with joystick command", Robot.logFile);
 		
-		requires(Robot.driveSystem);
+		requires( DriveSystem.getInstance());
 	}
 
 	@Override
@@ -23,7 +24,7 @@ public class DriveWithJoystickCommanWrite extends CommandWrite {
 		speed_ = Robot.oi.AdelStick.getRawAxis(1);
 		turn_ = Robot.oi.AdelStick.getRawAxis(3) - Robot.oi.AdelStick.getRawAxis(2);
 	
-		Robot.driveSystem.arcade(-speed_, turn_);	
+		 DriveSystem.getInstance().arcade(-speed_, turn_);	
 		
 	}
 
@@ -34,7 +35,7 @@ public class DriveWithJoystickCommanWrite extends CommandWrite {
 
 	@Override
 	protected void endWrite() {
-		Robot.driveSystem.tank(0,0);
+		 DriveSystem.getInstance().tank(0,0);
 	}
 	
 	

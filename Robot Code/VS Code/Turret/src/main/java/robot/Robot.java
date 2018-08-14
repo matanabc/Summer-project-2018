@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package robot;
+
 import java.util.LinkedList;
+
 import LogFile.WriteToFile;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,11 +32,11 @@ import vision.VisionClass.VisionMaster;
  */
 public class Robot extends TimedRobot {
 
-	public static DriveSystem driveSystem;
+	//public static DriveSystem driveSystem;
 
-	public static TurretShooterSystem turretShooterSystem;
-	public static TurretPanSystem turretPanSystem;
-	public static TurretTiltSystem turretTiltSystem;
+	//public static TurretShooterSystem turretShooterSystem;
+	//public static TurretPanSystem turretPanSystem;
+	//public static TurretTiltSystem turretTiltSystem;
 
 	public static OI oi;
 
@@ -44,7 +45,7 @@ public class Robot extends TimedRobot {
 
 	public static VisionMaster VM;
 	
-	public static VictorSP s;
+	//public static VictorSP s;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -59,12 +60,12 @@ public class Robot extends TimedRobot {
 		logFile = new LinkedList<>();
 		writeToFile = new WriteToFile(logFile);
 		
-		s = new VictorSP(2);
+		//s = new VictorSP(2);
 
-		turretShooterSystem = new TurretShooterSystem();
-		driveSystem = new DriveSystem();
-		turretPanSystem = new TurretPanSystem();
-		turretTiltSystem = new TurretTiltSystem();
+		//turretShooterSystem = new TurretShooterSystem();
+		//driveSystem = new DriveSystem();
+		//turretPanSystem = new TurretPanSystem();
+		//turretTiltSystem = new TurretTiltSystem();
 
 		oi = new OI();
 
@@ -162,7 +163,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		print();
 		
-		s.set(oi.AdelStick.getRawAxis(5) * 0.6);
+		//s.set(oi.AdelStick.getRawAxis(5) * 0.6);
 	}
 
 	/**
@@ -175,12 +176,12 @@ public class Robot extends TimedRobot {
 
 	public void print(){
 		//Turret prints
-		SmartDashboard.putNumber("Shooter velocity:", turretShooterSystem.getShooterVelocity());
-		SmartDashboard.putNumber("Turret position:", turretPanSystem.getSideEncoderPosition());
-		SmartDashboard.putNumber("Servo position:", turretPanSystem.getSideEncoderPosition());
+		SmartDashboard.putNumber("Shooter velocity:", TurretShooterSystem.getInstance().getShooterVelocity());
+		SmartDashboard.putNumber("Turret position:", TurretPanSystem.getInstance().getSideEncoderPosition());
+		SmartDashboard.putNumber("Servo position:", TurretPanSystem.getInstance().getSideEncoderPosition());
 
 		//Drive prints
-		SmartDashboard.putNumber("Navx angle", driveSystem.getAngleNavx());
+		SmartDashboard.putNumber("Navx angle", DriveSystem.getInstance().getAngleNavx());
 
 		//Vision prints
 		SmartDashboard.putNumber("Angle To Target", Math.abs(VM.getTargetPosition().getTargetAngle())
@@ -190,7 +191,7 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
 		
-		SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
+		SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
 		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
 		SmartDashboard.putNumber("Team Location", DriverStation.getInstance().getLocation());
 		SmartDashboard.putNumber("Match Number", DriverStation.getInstance().getMatchNumber());

@@ -8,7 +8,7 @@ import vision.VisionClass.VisionControllerInterface;
 import vision.VisionClass.VisionMaster;
 
 
-public class VisionCommand extends Command {
+public class VisionPIDCommand extends Command {
 
 	private VisionControllerInterface VC;
 	private VisionMaster VM;
@@ -35,7 +35,7 @@ public class VisionCommand extends Command {
 	 * PIDTsetpointF	-		this need to be true or false, true if you want it to control by PID (usually for PWM control)
 	 * 							false if you want it to control by setpoint (usually for TalonSRX or Servo control).
 	 */
-	public VisionCommand(VisionMaster VM, VisionControllerInterface VC, boolean panTtiltF, boolean PIDTsetpointF) {
+	public VisionPIDCommand(VisionMaster VM, VisionControllerInterface VC, boolean panTtiltF, boolean PIDTsetpointF) {
 
 		this.VC = VC;
 		this.VM = VM;
@@ -43,7 +43,7 @@ public class VisionCommand extends Command {
 		this.panTtiltF = panTtiltF;
 		this.PIDTsetpointF = PIDTsetpointF;
 		
-		this.gains_ = VC.getGains();
+		this.gains_ = VC.getPIDGains();
 		pidV_ = new PID_Variables();
 		pidV_.maxOutput = VC.getMaxOutput();
 		pidV_.maxErr = VC.getMaxerror();
