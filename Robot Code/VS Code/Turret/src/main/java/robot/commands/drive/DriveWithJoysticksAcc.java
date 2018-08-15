@@ -7,10 +7,10 @@
 
 package robot.commands.drive;
 
+import MotionProfiling.MP_Constants;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
-import robot.RobotMap;
 import robot.subsystems.DriveSystem;
 
 public class DriveWithJoysticksAcc extends Command {
@@ -34,38 +34,46 @@ public class DriveWithJoysticksAcc extends Command {
     	double time = Timer.getFPGATimestamp() ;
 		double dt = time - lastTime_;
 		
-		double turn = -Robot.oi.AdelStick.getRawAxis(4);//4
+		double turn = Robot.oi.AdelStick.getRawAxis(4);//4
 		double speed = -Robot.oi.AdelStick.getRawAxis(1);
+
+		double right = 0;
+		double left = 0;
+
+		if(Math.abs(turn) > 0.015 || Math.abs(speed) > 0.015 || Math.abs(lastRight_) > 0.05 || Math.abs(lastLeft_) > 0.05){
+			
+			if (Math.abs(speed) < 0.1){
+				turn *= 0.6;
+			}else{
+				turn *= 0.7;			
+			}
+			
+			double maxAdd = (dt * MP_Constants.MAX_EXELRATION_ACC * 8 /*10*/) / MP_Constants.MAX_SPEED;
+			left = speed + turn;
+			right = speed - turn;
+			
+			if (Math.abs(left) > 1){
+				left = left / Math.abs(left);
+			}
+			
+			if (Math.abs(right) > 1){
+				right = right / Math.abs(right);
+			}
+			
+			double sl = left - lastLeft_ > 0 ? 1 : -1;//turn / Math.abs(turn);
+			double sr = right - lastRight_ > 0 ? 1 : -1;
+			
+			left = Math.abs(left - lastLeft_) > maxAdd ? lastLeft_ + maxAdd * sl : left;
+			right = Math.abs(right - lastRight_) > maxAdd ? lastRight_ + maxAdd * sr : right;
+			
+			//SmartDashboard.putNumber("left Speed", left);
+			//double right = Math.abs(speed - turn - lastRight_) > maxAdd ? speed - maxAdd * s : speed - turn;
 		
-		if (Math.abs(speed) < 0.1){
-			turn *= 0.6;
-		}else{
-			turn *= 0.7;			
+			DriveSystem.getInstance().tank(left, right);
+		} else {
+			DriveSystem.getInstance().tank(0, 0);
 		}
-		
-		double maxAdd = (dt * RobotMap.MAX_ACC) / RobotMap.MAX_SPEED;
-		double left = speed + turn;
-		double right = speed - turn;
-		
-		if (Math.abs(left) > 1){
-			left = left / Math.abs(left);
-		}
-		
-		if (Math.abs(right) > 1){
-			right = right / Math.abs(right);
-		}
-		
-		double sl = left - lastLeft_ > 0 ? 1 : -1;//turn / Math.abs(turn);
-		double sr = right - lastRight_ > 0 ? 1 : -1;
-		
-		left = Math.abs(left - lastLeft_) > maxAdd ? lastLeft_ + maxAdd * sl : left;
-		right = Math.abs(right - lastRight_) > maxAdd ? lastRight_ + maxAdd * sr : right;
-		
-		//SmartDashboard.putNumber("left Speed", left);
-		//double right = Math.abs(speed - turn - lastRight_) > maxAdd ? speed - maxAdd * s : speed - turn;
-		
-		DriveSystem.getInstance().tank(left, right);
-		
+
 		lastLeft_ = left;
 		lastRight_ = right;
 		lastTime_ = time;

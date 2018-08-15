@@ -6,6 +6,13 @@ import java.util.TreeMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**  
+  * this class will do all the history off sensor data for vision
+  *	 and will bring you where the place of the target based the sensor.
+  *
+  * @author Matan Steinmetz.
+  */
+
 public class VisionMaster{
 
 	private int maxDecoderHestorySize;

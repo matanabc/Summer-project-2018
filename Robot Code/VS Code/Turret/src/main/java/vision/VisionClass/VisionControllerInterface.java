@@ -4,6 +4,10 @@ import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+
+/**  
+  * @author Matan Steinmetz.
+  */
 public interface VisionControllerInterface{
 	
 	/**

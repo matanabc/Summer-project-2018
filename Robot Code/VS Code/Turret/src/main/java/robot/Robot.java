@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import LogFile.WriteToFile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,7 +19,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.Turret.TurretPanSystem;
 import robot.subsystems.Turret.TurretShooterSystem;
-import robot.subsystems.Turret.TurretTiltSystem;
 import vision.VisionClass.VisionMaster;
 
 /**

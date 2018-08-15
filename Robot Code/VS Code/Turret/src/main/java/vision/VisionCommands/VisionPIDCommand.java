@@ -8,6 +8,9 @@ import vision.VisionClass.VisionControllerInterface;
 import vision.VisionClass.VisionMaster;
 
 
+/**  
+  * @author Matan Steinmetz.
+  */
 public class VisionPIDCommand extends Command {
 
 	private VisionControllerInterface VC;

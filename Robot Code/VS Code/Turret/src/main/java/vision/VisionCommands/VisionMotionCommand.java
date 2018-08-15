@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import vision.VisionClass.VisionControllerInterface;
 import vision.VisionClass.VisionMaster;
 
-/**
- *
- */
+/**  
+  * @author Matan Steinmetz.
+  */
 public class VisionMotionCommand extends Command {
 	
 	private VisionControllerInterface VC;
