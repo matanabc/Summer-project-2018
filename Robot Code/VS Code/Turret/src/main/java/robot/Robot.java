@@ -11,11 +11,13 @@ import java.util.LinkedList;
 
 import LogFile.WriteToFile;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.commands.drive.DriveSpeed;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.Turret.TurretPanSystem;
 import robot.subsystems.Turret.TurretShooterSystem;
@@ -169,10 +171,24 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+
+		//if()
+		//DriveSpeed c = new DriveSpeed(0.2, 0.2);
+		//c.start();
 	}
 
 
 	public void print(){
+		//auto
+		SmartDashboard.putString("Auto Start Position", "Dont No");
+
+		//robot Status
+		SmartDashboard.putBoolean("Is Auto", DriverStation.getInstance().isAutonomous());
+		SmartDashboard.putBoolean("Is Disable", DriverStation.getInstance().isDisabled());
+		SmartDashboard.putBoolean("Is Teleop", DriverStation.getInstance().isEnabled());
+		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
+		SmartDashboard.putString("Robot Status", "Default");
+
 		//Turret prints
 		SmartDashboard.putNumber("Shooter velocity:", TurretShooterSystem.getInstance().getShooterVelocity());
 		SmartDashboard.putNumber("Turret position:", TurretPanSystem.getInstance().getSideEncoderPosition());
@@ -188,12 +204,5 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Target Height", VM.getTargetPosition().getTargetHeight());
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
-		
-		SmartDashboard.putNumber("Battery Voltage", DriverStation.getInstance().getBatteryVoltage());
-		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
-		SmartDashboard.putNumber("Team Location", DriverStation.getInstance().getLocation());
-		SmartDashboard.putNumber("Match Number", DriverStation.getInstance().getMatchNumber());
-		SmartDashboard.putString("Alliance Name", DriverStation.getInstance().getAlliance().name());
-		SmartDashboard.putString("Match Time", DriverStation.getInstance().getEventName());
 	}
 }
