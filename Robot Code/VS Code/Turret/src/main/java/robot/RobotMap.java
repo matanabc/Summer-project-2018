@@ -9,6 +9,7 @@ package robot;
 
 import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -19,8 +20,12 @@ import MotionProfiling.PID_Classes.PID_Gains;
 public class RobotMap {
 
 	//---Joystick---\\
-	public static final int ADEL_JOYSTICK_CHANEL = 0;
+	//public static final int ADEL_JOYSTICK_CHANEL = 0;
+	public static int ADEL_JOYSTICK_CHANEL = getInt(1, "");
 	
+	public static int ADEL_JOYSTICK_CHANEL(){
+		return getInt(1, "");
+	}
 	
 	//---Robot---\\
 	
@@ -95,4 +100,8 @@ public class RobotMap {
 	
 	//---write command---\\
 	public static final String FILE_PLACE = "/home/admin/LogFile.txt";
+
+	private static int getInt(int defualt, String NTName){
+		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : (int) SmartDashboard.getNumber(NTName, defualt);
+	}
 }

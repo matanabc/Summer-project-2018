@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import LogFile.WriteToFile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.Turret.TurretPanSystem;
 import robot.subsystems.Turret.TurretShooterSystem;
-import robot.subsystems.Turret.TurretTiltSystem;
+import utils.DashBoard;
 import vision.VisionClass.VisionMaster;
 
 /**
@@ -197,5 +196,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Match Number", DriverStation.getInstance().getMatchNumber());
 		SmartDashboard.putString("Alliance Name", DriverStation.getInstance().getAlliance().name());
 		SmartDashboard.putString("Match Time", DriverStation.getInstance().getEventName());
+	
+		DashBoard.DriverPanel.putNumber("", 2.3);
+		DashBoard.TestPanel.putNumber("", 2.3);
 	}
+	
+	
 }

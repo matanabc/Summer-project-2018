@@ -10,19 +10,19 @@ package robot;
 import java.util.LinkedList;
 
 import LogFile.WriteToFile;
+import dashboard.DashBoard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.commands.drive.DriveSpeed;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.Turret.TurretPanSystem;
 import robot.subsystems.Turret.TurretShooterSystem;
 import vision.VisionClass.VisionMaster;
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -77,6 +77,8 @@ public class Robot extends TimedRobot {
 		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+
+		//SmartDashboard.putBoolean("Test Systeam", false);
 	}
 
 	/**
@@ -93,6 +95,8 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		print();
+
+		SmartDashboard.putString("Robot Status", "d");
 
 		if(SmartDashboard.getBoolean("Clean log file?", false)) {
 			logFile.add("clean");
@@ -163,6 +167,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		print();
 		
+		SmartDashboard.putString("Robot Status", "Default");
 		//s.set(oi.AdelStick.getRawAxis(5) * 0.6);
 	}
 
@@ -180,14 +185,15 @@ public class Robot extends TimedRobot {
 
 	public void print(){
 		//auto
-		SmartDashboard.putString("Auto Start Position", "Dont No");
+		//SmartDashboard.putString("Auto Start Position", "Dont No");
 
 		//robot Status
 		SmartDashboard.putBoolean("Is Auto", DriverStation.getInstance().isAutonomous());
 		SmartDashboard.putBoolean("Is Disable", DriverStation.getInstance().isDisabled());
 		SmartDashboard.putBoolean("Is Teleop", DriverStation.getInstance().isEnabled());
 		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
-		SmartDashboard.putString("Robot Status", "Default");
+		//SmartDashboard.putString("Robot Status", "Default");
+		SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
 
 		//Turret prints
 		SmartDashboard.putNumber("Shooter velocity:", TurretShooterSystem.getInstance().getShooterVelocity());
@@ -197,6 +203,8 @@ public class Robot extends TimedRobot {
 		//Drive prints
 		SmartDashboard.putNumber("Navx angle", DriveSystem.getInstance().getAngleNavx());
 
+		//System.out.println(SmartDashboard.getString("auto start position", "error"));
+
 		//Vision prints
 		SmartDashboard.putNumber("Angle To Target", Math.abs(VM.getTargetPosition().getTargetAngle())
 				- Math.abs(oi.VC.getSource()));
@@ -204,5 +212,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Target Height", VM.getTargetPosition().getTargetHeight());
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
+
+		//DashBoard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL);
+		//Dashboard.DriverPanel.putNumber("","");		
 	}
 }

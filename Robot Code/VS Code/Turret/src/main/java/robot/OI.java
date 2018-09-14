@@ -10,9 +10,11 @@ package robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import robot.Triggers.TestSysteamTriger;
 import robot.commands.TurretCommands.PanTiltAndShootCommand;
 import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
 import robot.commands.drive.DriveSpeedCommandWrite;
+import robot.commands.DriveSysteamTestCommand;
 import vision.VisionCommands.VisionPIDCommand;
 import vision.VisionControllers.PanVisionController;
 import vision.VisionControllers.TurretPanVisionController;
@@ -34,6 +36,8 @@ public class OI {
 	public TurretTiltVisionController TTVC = new TurretTiltVisionController();
 	public TurretShooterVisionController TSVC = new TurretShooterVisionController();
 
+	private TestSysteamTriger driveSysteamTest = new TestSysteamTriger("Test Drive Systeam");
+
 	public OI(){
 		for (int i = 0; i < 12; i ++){
 			AdelBtns[i] = new JoystickButton(AdelStick, i + 1);
@@ -51,6 +55,8 @@ public class OI {
 		AdelBtns[1].whileHeld(new ResetTalonsEncodersCommand());
 
 		AdelBtns[2].whileHeld(new VisionPIDCommand(Robot.VM, VC, true, true));
+
+		driveSysteamTest.whenActive(new DriveSysteamTestCommand());
 
 	}
 }
