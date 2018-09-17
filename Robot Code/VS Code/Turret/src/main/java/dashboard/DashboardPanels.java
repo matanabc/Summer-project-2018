@@ -3,9 +3,8 @@ package dashboard;
 public enum DashboardPanels {
 	
 	DRIVER_PANEL ("DriverPanel"),
-	TEST_PANEL ("TestPanel"),
+	TEST_PANEL ("LiveWindow"),
 	MAIN ("SmartDashboard"),
-	LIVE_WINDOW ("LiveWindow");
 
     private final String name;       
 

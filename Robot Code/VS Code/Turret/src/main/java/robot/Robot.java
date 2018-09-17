@@ -11,6 +11,7 @@ import java.util.LinkedList;
 
 import LogFile.WriteToFile;
 import dashboard.DashBoard;
+import dashboard.Dashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -214,6 +215,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Clean log file? ", false);
 
 		//DashBoard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL);
-		//Dashboard.DriverPanel.putNumber("","");		
+		//Dashboard.DriverPanel.putNumber("","");
 	}
 }

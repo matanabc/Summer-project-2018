@@ -2,7 +2,7 @@ package dashboard;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class DashBoard {
+public class Dashboard {
 	public static void putNumber(DashboardPanels PanelName, String key, double value){
 		NetworkTableInstance.getDefault().getTable(PanelName.toString()).getEntry(key).setNumber(value);
     }  
@@ -26,5 +26,4 @@ public class DashBoard {
     public static boolean getBoolean(DashboardPanels PanelName, String key, boolean defaultValue){
 		return NetworkTableInstance.getDefault().getTable(PanelName.toString()).getEntry(key).getBoolean(defaultValue);
 	} 
-
 }

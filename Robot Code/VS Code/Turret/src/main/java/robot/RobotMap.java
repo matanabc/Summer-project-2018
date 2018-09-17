@@ -101,7 +101,19 @@ public class RobotMap {
 	//---write command---\\
 	public static final String FILE_PLACE = "/home/admin/LogFile.txt";
 
+
+
+	//-------------------------------DON'T CHANGE!!!-------------------------------//
 	private static int getInt(int defualt, String NTName){
 		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : (int) SmartDashboard.getNumber(NTName, defualt);
+	}
+	private static double getDouble(double defualt, String NTName){
+		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getNumber(NTName, defualt);
+	}
+	private static boolean getBoolean(boolean defualt, String NTName){
+		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getBoolean(NTName, defualt);
+	}
+	private static String getString(String defualt, String NTName){
+		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getString(NTName, defualt);
 	}
 }
