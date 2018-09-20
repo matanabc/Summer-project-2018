@@ -10,14 +10,13 @@ package robot;
 import java.util.LinkedList;
 
 import LogFile.WriteToFile;
-import dashboard.DashBoard;
 import dashboard.Dashboard;
+import dashboard.DashboardPanels;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.subsystems.DriveSystem;
@@ -214,7 +213,10 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
 
-		//DashBoard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL);
+		Dashboard.putNumber(DashboardPanels.DRIVER_PANEL, "test", 1);
+
+		System.out.println(Dashboard.getNumber(DashboardPanels.TEST_PANEL, "Number", 0));
+
 		//Dashboard.DriverPanel.putNumber("","");
 	}
 }

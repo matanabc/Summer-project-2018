@@ -9,7 +9,8 @@ package robot;
 
 import MotionProfiling.MP_Classes.MPGains;
 import MotionProfiling.PID_Classes.PID_Gains;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import dashboard.Dashboard;
+import dashboard.DashboardPanels;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -104,16 +105,35 @@ public class RobotMap {
 
 
 	//-------------------------------DON'T CHANGE!!!-------------------------------//
+	//---int---\\
 	private static int getInt(int defualt, String NTName){
-		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : (int) SmartDashboard.getNumber(NTName, defualt);
+		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : (int) Dashboard.getNumber(DashboardPanels.TEST_PANEL, NTName, defualt);
 	}
+	private static int getInt(DashboardPanels panelName, int defualt, String NTName){
+		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : (int) Dashboard.getNumber(panelName, NTName, defualt);
+	}
+
+	//---double---\\
 	private static double getDouble(double defualt, String NTName){
-		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getNumber(NTName, defualt);
+		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getNumber(DashboardPanels.TEST_PANEL, NTName, defualt);
 	}
+	private static double getDouble(DashboardPanels panelName, double defualt, String NTName){
+		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getNumber(panelName, NTName, defualt);
+	}
+
+	//---boolean---\\
 	private static boolean getBoolean(boolean defualt, String NTName){
-		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getBoolean(NTName, defualt);
+		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getBoolean(DashboardPanels.TEST_PANEL, NTName, defualt);
 	}
+	private static boolean getBoolean(DashboardPanels panelName, boolean defualt, String NTName){
+		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getBoolean(panelName, NTName, defualt);
+	}
+
+	//---String---\\
 	private static String getString(String defualt, String NTName){
-		return SmartDashboard.getBoolean("Test Mode", false) ? defualt : SmartDashboard.getString(NTName, defualt);
+		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getString(DashboardPanels.TEST_PANEL, NTName, defualt);
+	}
+	private static String getString(DashboardPanels panelName, String defualt, String NTName){
+		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getString(panelName, NTName, defualt);
 	}
 }

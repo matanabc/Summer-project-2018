@@ -1,5 +1,9 @@
 package dashboard;
 
+/** 
+  * in DashboardPanels you can get all panels name for Dashboard 
+  * @author Matan Steinmetz.
+  */
 public enum DashboardPanels {
 	
 	DRIVER_PANEL ("DriverPanel"),
