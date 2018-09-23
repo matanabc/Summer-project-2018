@@ -2,7 +2,7 @@ package vision.VisionClass;
 
 import robot.Robot;
 
-public class VisionAddHistoryTrhad  implements Runnable{
+public class VisionAddHistoryTrhad implements Runnable{
 
 	@Override
 	public void run() {

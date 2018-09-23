@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.commands.TurretCommands.ResetTalonsEncodersCommand;
 import robot.subsystems.DriveSystem;
 import robot.subsystems.Turret.TurretPanSystem;
 import robot.subsystems.Turret.TurretShooterSystem;
@@ -74,9 +75,9 @@ public class Robot extends TimedRobot {
 
 		oi.loadOIs();
 
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", m_chooser);
+		m_chooser.addDefault("Default Auto", new ResetTalonsEncodersCommand());
+		m_chooser.addObject("My Auto", new ResetTalonsEncodersCommand());
+		Dashboard.putData(DashboardPanels.DRIVER_PANEL, "Auto mode", m_chooser);
 
 		//SmartDashboard.putBoolean("Test Systeam", false);
 	}
@@ -193,7 +194,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Is Teleop", DriverStation.getInstance().isEnabled());
 		SmartDashboard.putNumber("Match Time", DriverStation.getInstance().getMatchTime());
 		//SmartDashboard.putString("Robot Status", "Default");
-		SmartDashboard.putNumber("Battery Voltage", RobotController.getBatteryVoltage());
+		Dashboard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL, "Battery Voltage", RobotController.getBatteryVoltage());
 
 		//Turret prints
 		SmartDashboard.putNumber("Shooter velocity:", TurretShooterSystem.getInstance().getShooterVelocity());
@@ -213,9 +214,9 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putBoolean("Clean log file? ", false);
 
-		Dashboard.putNumber(DashboardPanels.DRIVER_PANEL, "test", 1);
+		Dashboard.putNumber(DashboardPanels.DRIVER_PANEL, "test", 3211);
 
-		System.out.println(Dashboard.getNumber(DashboardPanels.TEST_PANEL, "Number", 0));
+		System.out.println(RobotMap.ADEL_JOYSTICK_CHANEL());
 
 		//Dashboard.DriverPanel.putNumber("","");
 	}

@@ -22,10 +22,11 @@ public class RobotMap {
 
 	//---Joystick---\\
 	//public static final int ADEL_JOYSTICK_CHANEL = 0;
-	public static int ADEL_JOYSTICK_CHANEL = getInt(1, "");
+	public static int ADEL_JOYSTICK_CHANEL = getInt(0, "");
 	
 	public static int ADEL_JOYSTICK_CHANEL(){
-		return getInt(1, "");
+		//System.out.println(Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false));
+		return getInt(1, "Number");
 	}
 	
 	//---Robot---\\
@@ -106,34 +107,34 @@ public class RobotMap {
 
 	//-------------------------------DON'T CHANGE!!!-------------------------------//
 	//---int---\\
-	private static int getInt(int defualt, String NTName){
-		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : (int) Dashboard.getNumber(DashboardPanels.TEST_PANEL, NTName, defualt);
+	private static int getInt(String systeam, String key, int defualt){
+		return !Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode " + systeam, false) ? defualt : (int) Dashboard.getNumber(DashboardPanels.TEST_PANEL, key, defualt);
 	}
-	private static int getInt(DashboardPanels panelName, int defualt, String NTName){
-		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : (int) Dashboard.getNumber(panelName, NTName, defualt);
+	private static int getInt(String key, int defualt){
+		return (int) Dashboard.getNumber(DashboardPanels.TEST_PANEL, key, defualt);
 	}
 
 	//---double---\\
-	private static double getDouble(double defualt, String NTName){
-		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getNumber(DashboardPanels.TEST_PANEL, NTName, defualt);
+	private static double getDouble(String systeam, String key, double defualt){
+		return !Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode " + systeam, false) ? defualt : Dashboard.getNumber(DashboardPanels.TEST_PANEL, key, defualt);
 	}
-	private static double getDouble(DashboardPanels panelName, double defualt, String NTName){
-		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getNumber(panelName, NTName, defualt);
+	private static double getDouble(String key, int defualt){
+		return Dashboard.getNumber(DashboardPanels.TEST_PANEL, key, defualt);
 	}
 
 	//---boolean---\\
-	private static boolean getBoolean(boolean defualt, String NTName){
-		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getBoolean(DashboardPanels.TEST_PANEL, NTName, defualt);
+	private static boolean getBoolean(String systeam, String key, boolean defualt){
+		return !Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode " + systeam, false) ? defualt : Dashboard.getBoolean(DashboardPanels.TEST_PANEL, key, defualt);
 	}
-	private static boolean getBoolean(DashboardPanels panelName, boolean defualt, String NTName){
-		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getBoolean(panelName, NTName, defualt);
+	private static boolean getBoolean(String key, boolean defualt){
+		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, key, defualt);
 	}
 
 	//---String---\\
-	private static String getString(String defualt, String NTName){
-		return Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode", false) ? defualt : Dashboard.getString(DashboardPanels.TEST_PANEL, NTName, defualt);
+	private static String getString(String systeam, String key, String defualt){
+		return !Dashboard.getBoolean(DashboardPanels.TEST_PANEL, "Test Mode " + systeam, false) ? defualt : Dashboard.getString(DashboardPanels.TEST_PANEL, key, defualt);
 	}
-	private static String getString(DashboardPanels panelName, String defualt, String NTName){
-		return Dashboard.getBoolean(panelName, "Test Mode", false) ? defualt : Dashboard.getString(panelName, NTName, defualt);
+	private static String getString(String key, String defualt){
+		return Dashboard.getString(DashboardPanels.TEST_PANEL, key, defualt);
 	}
 }

@@ -8,6 +8,7 @@
 package robot.commands.drive;
 
 import MotionProfiling.MP_Constants;
+import dashboard.Dashboard;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
@@ -68,7 +69,10 @@ public class DriveWithJoysticksAcc extends Command {
 			
 			//SmartDashboard.putNumber("left Speed", left);
 			//double right = Math.abs(speed - turn - lastRight_) > maxAdd ? speed - maxAdd * s : speed - turn;
-		
+
+			//Dashboard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL, "sl", sl);
+			//Dashboard.putNumber(dashboard.DashboardPanels.DRIVER_PANEL, "sr", sr);
+
 			DriveSystem.getInstance().tank(left, right);
 		} else {
 			DriveSystem.getInstance().tank(0, 0);

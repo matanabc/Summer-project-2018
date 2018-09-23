@@ -8,7 +8,7 @@ public enum DashboardPanels {
 	
 	DRIVER_PANEL ("DriverPanel"),
 	TEST_PANEL ("LiveWindow"),
-	MAIN ("SmartDashboard"),
+	MAIN ("SmartDashboard");
 
     private final String name;       
 
