@@ -81,8 +81,11 @@ public class VisionMotionCommand extends Command {
 
 		double error = (startingPos_ + setpoint.pos) - VC.getSource();
 
-		double output = gains_.kv * setpoint.vel + gains_.ka * setpoint.acc +
-				error * gains_.kp + errorSum_ * gains_.ki + (error - lastError_) * gains_.kd;
+		double output = gains_.kv * setpoint.vel + 
+						gains_.ka * setpoint.acc +
+						error * gains_.kp + 
+						errorSum_ * gains_.ki + 
+						(error - lastError_) * gains_.kd;
 
 		errorSum_ += error;
 
